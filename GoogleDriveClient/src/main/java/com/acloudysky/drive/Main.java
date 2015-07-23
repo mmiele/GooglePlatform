@@ -13,11 +13,12 @@ public class Main {
 	 
 	/***
 	 * Main entry point which displays the start greetings.
-	 * It delegates the execution of method calls, displays the selection menu 
-	 * and process user input. 
+	 * Most importantly, it delegates to the {@SimpleUI} class the display of the selection menu 
+	 * and the processing of the user's input. 
 	 * @see SimpleUI
-	 * @param args; args[0] = "Michael"
-	 * 				args[1] = "Google Drive Console Application"
+	 * @param args; 
+	 *  args[0] = "Michael"
+	 *  args[1] = "Google Drive Console Application"
 	 * 
 	 */
 	public static void main(String[] args) {

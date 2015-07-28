@@ -161,12 +161,14 @@ public class AuthorizedService {
 		
 	  
 	/**
-	 * Authorize the installed application to access user's protected data. 
-	 * The authorization is based on the user's ID and secret associated
-	 * with the project enabled to use the Google Drive REST API.
-	 * @param dir The directory that contains the file with the client secrets.
-	 * @param clientSecretsFile The json file that contains the client secrets.
-	 * @return appCredentials The credential for the application.
+	 * It obtains the crdentials for the client application so it can use the 
+	 * requested service REST API.
+	 * <p><b>Note</b> It uses Google OAuth 2.0 authorization code flow that manages and persists end-user credentials. 
+	 * This is designed to simplify the flow in which an end-user authorizes the application to access their protected data, 
+	 * and then the application has access to their data based on an access token and a refresh token to refresh that 
+	 * access token when it expires. 
+	 * This is the key authorization routine.
+	 * @param appCredentials The client application credentials.
 	 * @throws Exception
 	 ***/
 	private  Credential authorize(String serviceScopes) throws Exception {
@@ -232,7 +234,7 @@ public class AuthorizedService {
 	/**
 	 * Create authorized service to allow the application to use the
 	 * Google service REST API.
-	 * @param serviceType The service name such as: storage, drive. 
+	 * @param serviceName The service name such as: storage, drive. 
 	 * @return The authorized service object.
 	 */
 	 public Object getAuthorizedService(String serviceName) {

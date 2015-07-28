@@ -104,7 +104,7 @@ public  final class DefaultSettings extends GenericJson {
 	 * Default constructor to allow creation of an instance 
 	 * of class com.acloudysky.drive.DefaultSettings in the creation of the settings object 
 	 * through the jasonFactory.
-	 * @see #readSettings().
+	 * @see #readSettings() readSettings.
 	 */
 	public DefaultSettings() {
 		

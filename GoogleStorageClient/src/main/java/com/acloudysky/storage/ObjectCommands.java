@@ -24,6 +24,8 @@ public class ObjectCommands {
 	/**
 	 * Initialize authenticated storage service and
 	 * settings applicable to the application.
+	 * @param defaultSettings Default settings in JSON format
+	 * @param authorizedService Storage authorized service
 	 */
 	public static void initObjectCommands(Storage authorizedService, 
 			DefaultSettings defaultSettings) {
@@ -81,9 +83,10 @@ public class ObjectCommands {
 	 * Display metadata for all the objects contained in the bucket.
 	 * <p>
 	 * For more information, see <a href="https://cloud.google.com/storage/docs/json_api/v1/objects/list" 
-	 * target="_blank">Objects:list</>
+	 * target="_blank">Objects:list</a> 
 	 * </p>
-	 * @throws IOException
+	 * @param bucketName The name of the bucket
+	 * @throws IOException IO error
 	 */
 	public static void listObjects(String bucketName) throws IOException {
 		
@@ -134,9 +137,11 @@ public class ObjectCommands {
 	 * Display an object metadata.
 	 * <p>
 	 * For more information, see <a href="https://cloud.google.com/storage/docs/json_api/v1/objects/get" 
-	 * target="_blank">Objects:get</>
+	 * target="_blank">Objects:get</a>
 	 * </p>
-	 * @throws IOException
+	 * @param bucketName The name of the bucket containing the object
+	 * @param objectName The name of the object
+	 * @throws IOException IO error
  	*/
 	public static void getObject(String bucketName, 
 			String objectName) throws IOException {
@@ -174,8 +179,8 @@ public class ObjectCommands {
 	
 	/**
 	 * Upload an object.
-	 * @param useCustomMetadata
-	 * @throws IOException
+	 * @param useCustomMetadata true if to sue cuetom metadata; otherwise, false
+	 * @throws IOException IO error
 	 */
 	public static void uploadObject(boolean useCustomMetadata) throws IOException {
 		displayMessageHeader("Uploading object.");

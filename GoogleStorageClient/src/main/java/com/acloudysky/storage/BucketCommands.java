@@ -20,8 +20,10 @@ public class BucketCommands {
 	private static DefaultSettings settings;
 	
 	/**
-	 * Initialize authenticated storage service and
-	 * settings applicable to the application.
+	 * Initialize authenticated storage service using default 
+	 * settings.
+	 * @param authorizedService The storage authorized service
+	 * @param defaultSettings The default settings in JSON format
 	 */
 	public static void initBucketCommands(Storage authorizedService, 
 			DefaultSettings defaultSettings) {
@@ -57,10 +59,11 @@ public class BucketCommands {
 	 * If successful, return the created bucket metadata.
 	 * <p>
 	 * For more information, see <a href="https://cloud.google.com/storage/docs/json_api/v1/buckets/insert" 
-	 * target="_blank">Buckets:insert</>
+	 * target="_blank">Buckets:insert</a>
 	 * </p>
 	 * @param bucketName The name of the bucket to create.
-	 * @throws IOException
+	 * @throws IOException IO error
+	 * @return true if the operation succeeded; otherwise, false
 	 */
 	public static boolean insertBucket(String bucketName) throws IOException {
 	    displayMessageHeader("Create the bucket: " + bucketName);
@@ -101,9 +104,10 @@ public class BucketCommands {
 	  * Retrieve the specified bucket metadata.
 	  * <p>
 	  * For more information, see <a href="https://cloud.google.com/storage/docs/json_api/v1/buckets/get" 
-	  * target="_blank">Buckets:get</>
+	  * target="_blank">Buckets:get</a>
 	  * </p>
-	  * @throws IOException
+	  * @param bucketName The name of the bucket
+	  * @throws IOException IO error
 	  */
 	 public static void getBucket(String bucketName) throws IOException {
 	   

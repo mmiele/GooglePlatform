@@ -21,6 +21,8 @@ public class ProjectCommands {
 	/**
 	 * Initialize authenticated storage service and
 	 * settings applicable to the application.
+	 * @param authorizedService The object representing the authorized service.
+	 * @param defaultSettings The default values to use for the project
 	 */
 	public static void initProjectCommands(Storage authorizedService, 
 			DefaultSettings defaultSettings) {
@@ -57,9 +59,9 @@ public class ProjectCommands {
 	 * Display the metadata of the retrieved buckets.
 	 * <p>
 	 * For more information, see <a href="https://cloud.google.com/storage/docs/json_api/v1/buckets/list" 
-	 * target="_blank">Buckets:list</>
+	 * target="_blank">Buckets:list</a>
 	 * </p>
-	 * @throws IOException
+	 * @throws IOException IO error
 	 */
 	public static void listBuckets() throws IOException {
 	  

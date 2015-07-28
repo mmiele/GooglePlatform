@@ -13,9 +13,9 @@ public class Main {
 	 
 	/***
 	 * Main entry point which displays the start greetings.
-	 * Most importantly, it delegates to the {@SimpleUI} class the display of the selection menu 
+	 * Most importantly, it delegates to the SimpleUI class the display of the selection menu 
 	 * and the processing of the user's input. 
-	 * @see SimpleUI
+	 * @see SimpleUI#SimpleUI(Drive)
 	 * @param args; 
 	 *  args[0] = "Michael"
 	 *  args[1] = "Google Drive Console Application"

@@ -5,6 +5,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.Collections;
+import java.util.Hashtable;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import com.google.api.client.auth.oauth2.Credential;
 import com.google.api.client.extensions.java6.auth.oauth2.AuthorizationCodeInstalledApp;
@@ -28,19 +32,18 @@ import com.google.api.services.storage.StorageScopes;
 
 
 /**
- * The AuthorizedService class provides a service object that is authorized to 
+ * The AuthorizedService class creates a service object that is authorized to 
  * access the selected Google service API. 
- * <p>
  * <ul>
  * 	<li> It applies to client applications that are of
  * the <b>installed application</b> type. For more information, see 
  * <a href="http://acloudysky.com/?p=1043#usingoauth" target="_blank">
  * Using OAuth2.0 to Access Google APIs</a> </li>
  * 	<li> Based on the caller' selection, it allows the creation of an authorized 
- * 	service to access <a href="https://cloud.google.com/storage/docs/overview" target="_blank">Google Cloud Storage API</a> or 
+ * 	service to access service APIs cuch as <a href="https://cloud.google.com/storage/docs/overview" target="_blank">Google Cloud Storage API</a> or 
  * <a href="https://developers.google.com/drive/web/about-sdk" target="_blank">Google Drive API</a>.</li>
  * </ul>
- * @author MIchael Miele
+ * @author Michael Miele
  *
  */
 public class AuthorizedService {
@@ -49,13 +52,13 @@ public class AuthorizedService {
 	   * Be sure to specify the name of your application. If the application name is {@code null} or
 	   * blank, the application will log a warning. Suggested format is "MyCompany-ProductName/1.0".
 	   */
-	  private  final String APPLICATION_NAME = "Cloud Drive Client";
+	  private  final String APPLICATION_NAME = "acloudysky.com-authorizedservice/1.0";
 	
 	  // Directory and file where client secrets are kept. 
-	  private  static String base_dir, sample_dir, data_dir;
+	  private  static String base_dir, data_dir;
 	  private  static String clientSecretsFile;
 	
-	// Get the current computer OS and the user home directory. 
+	  // Get the current computer OS name and the user home directory. 
 	  private  static String OS = System.getProperty("os.name");
       private  static String home_dir = System.getProperty("user.home");
 	 
@@ -87,7 +90,8 @@ public class AuthorizedService {
 
 	  /**
 	   * Class constructor.
-	   * @param dir The directory containing the file with the client secrets.
+	   * @param baseDir The parent directory
+	   * @param sampleDir The directory containing the file with the client secrets.
 	   * @param secretsFile The file containing the client secrets.
 	   * <p><b>Note</b>, The client secrets are:
 	   * <ol>
@@ -100,13 +104,12 @@ public class AuthorizedService {
 	   * <a href="https://console.developers.google.com/project" target="_blank">Google console</a>.
 	   * Then copy this information in the <i>secretsFile</i> such as client_secrets.json. 
 	   * <b>Keep this file in a safe place</b>.
-	   * <p>Usage Example: Service(".store/store_sample", "client_secrets.json"); </p>
+	   * <p>Usage Example: Service(".store", "store_sample", "client_secrets.json"); </p>
 	   */
 	  public AuthorizedService (String baseDir, String sampleDir, String secretsFile) {
 		 
 		  // Store base and sample directories.
 		  base_dir = baseDir;
-		  sample_dir = sampleDir;
 		  
 		  // Store client secrets file name.
 		  clientSecretsFile = secretsFile;
@@ -118,11 +121,12 @@ public class AuthorizedService {
 	        	if (OS.startsWith("Mac"))
 	        		data_dir = base_dir.concat("/" + sampleDir);
 	        	
-		  // Creates a new File instance from a parent pathname string and a child pathname string.
+		  // Create a new File instance from a parent pathname string and a child pathname string.
 		  DATA_STORE_DIR =
 				  new java.io.File(home_dir, data_dir);
 	  }
 	  
+	 
 	  /**
 	   * Calculate the absolute path of the client secrets file.
 	   * @param dir The name of the directory where the file resides.
@@ -247,7 +251,7 @@ public class AuthorizedService {
 				service = null;
 				String serviceScopes = "";
 				
-				switch(serviceType) {
+				switch(serviceType.toLowerCase()) {
 				
 					case "storage": {
 						// Obtain the credential for the application
@@ -255,7 +259,6 @@ public class AuthorizedService {
 						appCredential = authorize(serviceScopes);
 						service = new Storage.Builder(httpTransport, JSON_FACTORY, appCredential).setApplicationName(
 						    		APPLICATION_NAME).build();
-						
 						break;
 					}
 					case "drive": {
@@ -273,8 +276,7 @@ public class AuthorizedService {
 						break;
 					}
 				}
-				
-			    
+					
 			} 
 			catch (GoogleJsonResponseException e) {
 				// An error came back from the API.
@@ -297,4 +299,6 @@ public class AuthorizedService {
 		  
 		  return service;
 	  }
+	 		 
+	 
 }

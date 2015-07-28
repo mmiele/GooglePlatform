@@ -12,7 +12,7 @@ import com.google.api.client.util.Key;
 
 
 /** 
- * Read the current example settings from the predefined JSON file.
+ * Read the default settings from the related JSON file.
  * The file contains information such as project ID, default bucket name and so on.
  * The following is an example of the JSON formatted information:
  * {
@@ -101,7 +101,7 @@ public final class DefaultSettings extends GenericJson {
 	 * Default constructor to allow creation of an instance 
 	 * of class com.acloudysky.drive.DefaultSettings in the creation of the settings object 
 	 * through the jasonFactory.
-	 * @see readSettings.
+	 * @see #readSettings() readSettings.
 	 */
 	public DefaultSettings() {
 		

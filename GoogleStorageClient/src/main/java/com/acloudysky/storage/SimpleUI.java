@@ -1,3 +1,13 @@
+/** 
+ * Legal Use and Disclaimer 
+ * This software belongs to the owner of the http://www.acloudysky.com site and supports the
+ * examples described there. 
+ * Unless required by applicable law or agreed to in writing, this software is distributed on 
+ * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
+ * or implied. 
+ * Please, use the software accordingly and provide the proper acknowledgement to the author.
+ * @author mielem@gmail.com  
+ **/
 package com.acloudysky.storage;
 
 

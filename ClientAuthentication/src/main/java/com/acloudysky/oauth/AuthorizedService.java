@@ -1,14 +1,22 @@
-package com.acloudysky.oauth;
+
+ /** 
+ * Legal Use and Disclaimer 
+ * This software belongs to the owner of the http://www.acloudysky.com site and supports the
+ * examples described there. 
+ * Unless required by applicable law or agreed to in writing, this software is distributed on 
+ * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
+ * or implied. 
+ * Please, use the software accordingly and provide the proper acknowledgement to the author.
+ * @author mielem@gmail.com  
+ **/
+ package com.acloudysky.oauth;
 
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.Collections;
-import java.util.Hashtable;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Map.Entry;
+
 
 import com.google.api.client.auth.oauth2.Credential;
 import com.google.api.client.extensions.java6.auth.oauth2.AuthorizationCodeInstalledApp;
@@ -28,7 +36,6 @@ import com.google.api.services.drive.Drive;
 import com.google.api.services.drive.DriveScopes;
 import com.google.api.services.storage.Storage;
 import com.google.api.services.storage.StorageScopes;
-
 
 
 /**
@@ -228,7 +235,7 @@ public class AuthorizedService {
 	 * @param serviceType The service name such as: storage, drive. 
 	 * @return The authorized service object.
 	 */
-	 public Object getAuthorizedService(String serviceType) {
+	 public Object getAuthorizedService(String serviceName) {
 		 
 		  Object service = null;
 		  
@@ -251,7 +258,7 @@ public class AuthorizedService {
 				service = null;
 				String serviceScopes = "";
 				
-				switch(serviceType.toLowerCase()) {
+				switch(serviceName.toLowerCase()) {
 				
 					case "storage": {
 						// Obtain the credential for the application
@@ -271,7 +278,7 @@ public class AuthorizedService {
 					}
 
 					default: {
-						System.out.println(String.format("Service %s is not allowed.", serviceType));
+						System.out.println(String.format("Service %s is not allowed.", serviceName));
 						System.out.println(String.format("Allowed services are %s, %s", "storage", "drive"));
 						break;
 					}

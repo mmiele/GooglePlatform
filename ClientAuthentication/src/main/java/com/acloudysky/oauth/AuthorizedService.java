@@ -1,13 +1,13 @@
 
  /** 
- * Legal Use and Disclaimer 
+ * LEGAL: Use and Disclaimer. 
  * This software belongs to the owner of the http://www.acloudysky.com site and supports the
  * examples described there. 
  * Unless required by applicable law or agreed to in writing, this software is distributed on 
  * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
  * or implied. 
  * Please, use the software accordingly and provide the proper acknowledgement to the author.
- * @author mielem@gmail.com  
+ * @author milexm@gmail.com  
  **/
  package com.acloudysky.oauth;
 
@@ -161,11 +161,11 @@ public class AuthorizedService {
 		
 	  
 	/**
-	 * It obtains the crdentials for the client application so it can use the 
+	 * It obtains the credentials for the client application so it can use the 
 	 * requested service REST API.
 	 * <p><b>Note</b> It uses Google OAuth 2.0 authorization code flow that manages and persists end-user credentials. 
-	 * This is designed to simplify the flow in which an end-user authorizes the application to access their protected data, 
-	 * and then the application has access to their data based on an access token and a refresh token to refresh that 
+	 * This is designed to simplify the flow in which an end-user authorizes the application to access her protected data, 
+	 * and then the application has access to the data based on an access token and a refresh token to refresh that 
 	 * access token when it expires. 
 	 * This is the key authorization routine.
 	 * @param appCredentials The client application credentials.

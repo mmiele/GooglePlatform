@@ -18,6 +18,13 @@ import com.google.api.services.storage.model.Buckets;
 
 import java.util.logging.*;
 
+/**
+ * Contains methods to perform Google Cloud Storage project operations.
+ * A method calls the related REST API
+ * @see com
+ * @author Michaael
+ *
+ */
 public class ProjectCommands {
 
 	private static Logger httplogger;
@@ -29,7 +36,7 @@ public class ProjectCommands {
 	private static DefaultSettings settings;
 	
 	/**
-	 * Initialize authenticated storage service and
+	 * Initializes authenticated storage service and
 	 * settings applicable to the application.
 	 * @param authorizedService The object representing the authorized service.
 	 * @param defaultSettings The default values to use for the project
@@ -65,12 +72,10 @@ public class ProjectCommands {
 	 
 
  	/**
-	 * Retrieve the a list of buckets for a given project.
-	 * Display the metadata of the retrieved buckets.
-	 * <p>
-	 * For more information, see <a href="https://cloud.google.com/storage/docs/json_api/v1/buckets/list" 
-	 * target="_blank">Buckets:list</a>
-	 * </p>
+	 * Retrieves the a list of buckets for a given project.
+	 * Displays the metadata of the retrieved buckets.
+	 * For more information, see 
+	 * <a href="https://developers.google.com/resources/api-libraries/documentation/storage/v1beta2/java/latest/com/google/api/services/storage/Storage.Buckets.List.html" target="_blank">Storage.Buckets.List</a>.
 	 * @throws IOException IO error
 	 */
 	public static void listBuckets() throws IOException {

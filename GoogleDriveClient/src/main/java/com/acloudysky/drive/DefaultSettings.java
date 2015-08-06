@@ -25,7 +25,7 @@ import com.google.api.client.util.Key;
  * Reads the default settings from the related JSON file.
  * The file contains information such as project ID, default bucket name and so on.
  * <p>
- * 	<b>Note</b>. This class uses {@link com.google.api.client.json.jackson2.JacksonFactory#getDefaultInstance} to create
+ * 	<b>Note</b>. This class uses {@link com.google.api.client.json.jackson2.JacksonFactory#getDefaultInstance()} to create
  * a DefaultSettings object to read the JSON formatted information.
  * </p>
  * The following is an example of the JSON formatted information:
@@ -125,7 +125,7 @@ public final class DefaultSettings extends GenericJson {
 	/**
 	 * Creates an instance of the class and passes to it the information 
 	 * to locate the JSON file which contains the actual default values. 
-	 * <p> It stores the complete directory name in the global variable {@see DefaultSettings#data_dir data_dir} 
+	 * <p> It stores the complete directory name in the global variable data_dir. 
 	 * @param parentDir The parent directory
 	 * @param sampleDir The directory containing the file
 	 * @param defaultsFile The name of the file which contains the default values

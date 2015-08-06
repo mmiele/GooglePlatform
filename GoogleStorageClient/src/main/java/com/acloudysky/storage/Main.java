@@ -24,16 +24,25 @@ public class Main {
 
 	 
 	/***
-	 * Main entry point which displays the start greetings.
-	 * It delegates the execution of method calls, displays the selection menu 
-	 * and process user input. 
-	 * @see SimpleUI
+     * Main entry point which displays the start greetings. It performs the 
+     * following main tasks:
+     * <ul>
+     *		<li>Reads the default settings.</li>
+     * 		<li>Instantiates the command classes.</li>
+	 * 		<li>Delegates to the SimpleUI class the display of the selection 
+	 *         menu and the processing of the user's input.</li>
+	 * </ul>
+	 * @see DefaultSettings#DefaultSettings(String, String, String) 
+	 * @see ProjectCommands#initProjectCommands(Storage, DefaultSettings)
+     * @see BucketCommands#initBucketCommands(Storage, DefaultSettings)
+     * @see ObjectCommands#initObjectCommands(Storage, DefaultSettings)
+     * @see SimpleUI#SimpleUI()
 	 * @param args; args[0] = "Michael"
 	 * 				args[1] = "Google Storage Console Application"
 	 * 
 	 */
 	public static void main(String[] args) {
-		
+	
 		String name, topic;
 		
 		try {

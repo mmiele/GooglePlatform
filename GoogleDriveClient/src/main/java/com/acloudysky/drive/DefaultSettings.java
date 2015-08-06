@@ -22,8 +22,12 @@ import com.google.api.client.util.Key;
 
 
 /** 
- * Read the default settings from the related JSON file.
+ * Reads the default settings from the related JSON file.
  * The file contains information such as project ID, default bucket name and so on.
+ * <p>
+ * 	<b>Note</b>. This class uses {@link com.google.api.client.json.jackson2.JacksonFactory#getDefaultInstance} to create
+ * a DefaultSettings object to read the JSON formatted information.
+ * </p>
  * The following is an example of the JSON formatted information:
  * {
  * 	"defaultbucket": "my_toycars",
@@ -108,15 +112,24 @@ public final class DefaultSettings extends GenericJson {
 	}
   
 	/**
-	 * Default constructor to allow creation of an instance 
-	 * of class com.acloudysky.drive.DefaultSettings in the creation of the settings object 
-	 * through the jasonFactory.
+	 * Default constructor. 
+	 * It is required to allow the creation of an instance of the 
+	 * {@link #DefaultSettings} class through the {@link com.google.api.client.json.jackson2.JacksonFactory#getDefaultInstance getDefaultInstance} 
+	 * during the creation of the settings object.
 	 * @see #readSettings() readSettings.
 	 */
 	public DefaultSettings() {
 		
 	}
 	
+	/**
+	 * Creates an instance of the class and passes to it the information 
+	 * to locate the JSON file which contains the actual default values. 
+	 * <p> It stores the complete directory name in the global variable {@see DefaultSettings#data_dir data_dir} 
+	 * @param parentDir The parent directory
+	 * @param sampleDir The directory containing the file
+	 * @param defaultsFile The name of the file which contains the default values
+	 */
 	public DefaultSettings(String parentDir, String sampleDir, String defaultsFile) {
 		
 		parent_dir = parentDir;
@@ -132,7 +145,7 @@ public final class DefaultSettings extends GenericJson {
 	}
 	
 	/**
-	 * Calculate the absolute path of the default settings file.
+	 * Calculates the absolute path of the default settings file.
 	 * @param dir The name of the directory where the file resides.
 	 * @param fileName The name of the file.
 	 * @return The absolute path of the file.
@@ -156,9 +169,9 @@ public final class DefaultSettings extends GenericJson {
 	}
 	
 	/**
-	 * Read sample settings contained in the supporting <i>defaults_file</i>.
+	 * Reads sample settings contained in the supporting <i>defaults_file</i>.
 	 * <p>
-	 * 	<b>Note</b>. This method uses {@link com.google.api.client.json.JsonFactory} to create
+	 * 	<b>Note</b>. This method uses {@link com.google.api.client.json.jackson2.JacksonFactory#getDefaultInstance} to create
 	 * a DefaultSettings object to read the JSON formatted information.
 	 * </p>
 	 */

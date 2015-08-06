@@ -19,6 +19,11 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 
+/**
+ * Contains utility methods to handle file operations.
+ * @author Michael
+ *
+ */
 public class FileUtilities {
 	
 	/*

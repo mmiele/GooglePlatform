@@ -33,15 +33,15 @@ import java.util.List;
 
 
 /**
- * Defines the methods which issue Google Drive REST API calls 
+ * Contains the methods which issue Google Drive REST API calls 
  * for file operations.
- * @author mmiele
+ * @author Michael
  *
  */
 public class FileCommands {
 
 	/**
-	 * Internal class that contains utility methods using during the
+	 * Internal class that contains utility methods used during the
 	 * processing of file commands.
 	 * @author mmiele
 	 *
@@ -160,9 +160,8 @@ public class FileCommands {
 	private Drive service;
 	
 	/**
-	 * Class constructor. It initializes 
-	 * global variables such  as the {@link service}.
-	 * @param authorizedService The authenticate service 
+	 * Class constructor. Initializes global variables.
+	 * @param authorizedService The authenticated service 
 	 * authorized to access Google Drive using its REST API. 
 	 */
 	public FileCommands(Drive authorizedService) {
@@ -173,7 +172,7 @@ public class FileCommands {
 	/******** File Commands *******/
 
 	/**
-	 * Get a file metadata. Also copy content to a local file.
+	 * Gets a file metadata. Also copies content to a local file.
 	 * @param fileID The ID of the file for which to get the metadata.
 	 * @param dir The directory containing the copied file.
 	 * @param localFile The file where to copy the content.
@@ -217,7 +216,7 @@ public class FileCommands {
 	
 	
 	 /**
-	  * Retrieve the list of user's files.
+	  * Retrieves the list of user's files.
 	  * @throws IOException An I/O error has been detected.
 	  ***/
 	  public void listFiles() throws IOException {
@@ -248,7 +247,7 @@ public class FileCommands {
 
 	  
 	  /**
-	   * Insert new file.
+	   * Inserts new file.
 	   *
 	   * @param title Title of the file to insert, including the extension.
 	   * @param description Description of the file to insert.
@@ -299,7 +298,7 @@ public class FileCommands {
 	 /******* Parents Commands *******/
 	
 	  /**
-	   * Check if a file is in a specific folder
+	   * Checks if a file is in a specific folder
 	   * @param folderId ID of the folder.
 	   * @param fileId ID of the file.
 	   * @return Whether or not the file is in the folder.

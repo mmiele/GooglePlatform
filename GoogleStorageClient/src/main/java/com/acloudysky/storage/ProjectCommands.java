@@ -36,8 +36,7 @@ public class ProjectCommands {
 	private static DefaultSettings settings;
 	
 	/**
-	 * Initializes authenticated storage service and
-	 * settings applicable to the application.
+	 * Initializes the authenticated storage service and default settings. 
 	 * @param authorizedService The object representing the authorized service.
 	 * @param defaultSettings The default values to use for the project
 	 */

@@ -28,14 +28,6 @@ import com.google.api.client.util.Key;
  * 	<b>Note</b>. This class uses {@link com.google.api.client.json.jackson2.JacksonFactory#getDefaultInstance()} to create
  * a DefaultSettings object to read the JSON formatted information.
  * </p>
- * The following is an example of the JSON formatted information:
- * {
- * 	"defaultbucket": "my_toycars",
- * 	"defaultobject": "luigi.jpg",
- * 	"prefix": "myself",
- * 	"email": "me@gmail.com",
- * 	"domain": "acloudysky.com"
- * }
  * @author Michael
  *
  */

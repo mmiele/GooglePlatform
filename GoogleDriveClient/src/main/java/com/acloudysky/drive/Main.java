@@ -11,6 +11,7 @@
 package com.acloudysky.drive;
 
 import com.google.api.services.drive.Drive;
+import com.google.api.services.drive.DriveScopes;
 import com.acloudysky.oauth.AuthorizedService;
 
 /**
@@ -47,24 +48,9 @@ public class Main {
 			System.exit(1);
 		}
 		
-		Drive driveService = null;
+		Drive driveService = OAuthUtilities.getAuthorizedService(DriveScopes.DRIVE);
 		
-		try {
-			// Instantiate the Service class.
-			AuthorizedService service = 
-					new AuthorizedService(".store", "drive_sample", "client_secrets.json");
-			
-			// Get the authorized service so the application can use its  API.
-			driveService = (Drive) service.getAuthorizedService("drive");
-			
-		}
-		catch (Exception e) {
-			String.format("Error %s during service authorization.", e.toString());
-		}
-		
-
 		if (driveService != null) {
-			
 			/*
 			 *  Instantiate the DefaultSettings class.
 			 *	We assume that in the user home directory a parent directory exists called ".store".

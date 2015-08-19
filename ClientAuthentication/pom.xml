@@ -32,7 +32,6 @@
 	</dependency>
 	
 	
-      
 	<!-- Access Google Drive service API -->
 	<dependency>
       	<groupId>com.google.apis</groupId>
@@ -46,8 +45,14 @@
       	<groupId>com.google.apis</groupId>
       	<artifactId>google-api-services-storage</artifactId>
       	<version>v1-rev35-1.20.0</version>
-      	
 	</dependency>
+	
+	<!-- Access Cloud Youtube service API -->
+	<dependency>
+      	<groupId>com.google.apis</groupId>
+      	<artifactId>google-api-services-youtube</artifactId>
+      	<version>v3-rev143-1.20.0</version>
+     </dependency>
   
   
   </dependencies>

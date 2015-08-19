@@ -23,6 +23,7 @@ import com.google.api.client.extensions.java6.auth.oauth2.AuthorizationCodeInsta
 import com.google.api.client.extensions.java6.auth.oauth2.VerificationCodeReceiver;
 import com.google.api.client.extensions.jetty.auth.oauth2.LocalServerReceiver;
 import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeFlow;
+import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeFlow.Builder;
 import com.google.api.client.googleapis.auth.oauth2.GoogleClientSecrets;
 import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport;
 import com.google.api.client.googleapis.json.GoogleJsonError;
@@ -36,6 +37,8 @@ import com.google.api.services.drive.Drive;
 import com.google.api.services.drive.DriveScopes;
 import com.google.api.services.storage.Storage;
 import com.google.api.services.storage.StorageScopes;
+import com.google.api.services.youtube.YouTube;
+import com.google.api.services.youtube.YouTubeScopes;
 
 
 /**
@@ -69,6 +72,8 @@ public class AuthorizedService {
 	  private  static String OS = System.getProperty("os.name");
       private  static String home_dir = System.getProperty("user.home");
 	 
+      public static String currentServiceScopes = "";
+      
       // Directory to store user credentials. 
 	  private java.io.File DATA_STORE_DIR;
 	  
@@ -77,7 +82,7 @@ public class AuthorizedService {
 	  
 	  public Object getService() {
 		return service;
-	}
+	  }
 
 	
 	/**
@@ -140,7 +145,7 @@ public class AuthorizedService {
 	   * @param fileName The name of the file.
 	   * @return The absolute path of the file.
 	   */
-	  private static String getAbsoluteFilePath () {
+	  private static String getClientSecretsFileAbsolutePath () {
 		
         String filePath = null;
         
@@ -161,20 +166,36 @@ public class AuthorizedService {
 		
 	  
 	/**
-	 * It obtains the credentials for the client application so it can use the 
-	 * requested service REST API.
+	 * It obtains the credentials for the client application to allow the use of the requested service REST API.
 	 * <p><b>Note</b> It uses Google OAuth 2.0 authorization code flow that manages and persists end-user credentials. 
 	 * This is designed to simplify the flow in which an end-user authorizes the application to access her protected data, 
 	 * and then the application has access to the data based on an access token and a refresh token to refresh that 
 	 * access token when it expires. 
 	 * This is the key authorization routine.
-	 * @param appCredentials The client application credentials.
+	 * @param serviceScopes The service access scope to grant to the client app.
+	 * @return appCredentials The client application credentials.
 	 * @throws Exception
 	 ***/
 	private  Credential authorize(String serviceScopes) throws Exception {
 	   
-		// Get client secrets absolute file path.
-		String filePath = getAbsoluteFilePath();
+		System.out.println(String.format("Current scope: %s", currentServiceScopes));
+		System.out.println(String.format("New scope: %s", serviceScopes));
+	
+		boolean storeCredentials = true;
+		
+		// If the application needs to change service scope while running, like in the Youtube case,
+		// a new authorized service must be created and the owner must grant access to service, again.  
+		// By disabling the storing of the credentials, the owner is prompted to grant access. If the 
+		// application call the service again with the same permissions the credentials are stored and used
+		// from then on without asking the owner's grant.
+		// The check on empty string is to allow the storing of the credentials the first time the 
+		// application runs.
+		if (serviceScopes != currentServiceScopes && ! currentServiceScopes.isEmpty()  ){
+			 storeCredentials = false;
+		}
+		
+		// Get client secrets file absolute path.
+		String filePath = getClientSecretsFileAbsolutePath();
 		
 		// Load client secrets from the file where they are stored.
 		InputStream inputStream = new FileInputStream(filePath);
@@ -202,23 +223,24 @@ public class AuthorizedService {
 	    Credential appCredentials = null;
 			
 		try{
-			// Set authorization flow. 
-		    flow = new GoogleAuthorizationCodeFlow.Builder(
+			// Set authorization flow.
+			Builder codeFlowBuilder = new Builder(
 		    		httpTransport, JSON_FACTORY, clientSecrets,
-			        Collections.singleton(serviceScopes)).setDataStoreFactory(
-			        dataStoreFactory).build();
+			        Collections.singleton(serviceScopes));
+			
+			if (!storeCredentials)
+				// If credentials are not stored the resource owner is
+				// prompted to grant access every time the client app 
+				// restarts.
+				flow = codeFlowBuilder.build();
+			else
+				flow = codeFlowBuilder.setDataStoreFactory(dataStoreFactory).build();
+				
 		    if (flow != null) {
-				// Set authorization flow. 
-				flow = new GoogleAuthorizationCodeFlow.Builder(
-			    		httpTransport, JSON_FACTORY, clientSecrets,
-				        Collections.singleton(serviceScopes)).setDataStoreFactory(
-				        dataStoreFactory).build();
-		
-				// Authorize
+				// Authorize client app.
 				VerificationCodeReceiver rcv = new LocalServerReceiver();
 				appCredentials = 
 					new AuthorizationCodeInstalledApp(flow, rcv).authorize("user");
-		    
 		    }
 		}
 		catch (IOException e){
@@ -237,7 +259,7 @@ public class AuthorizedService {
 	 * @param serviceName The service name such as: storage, drive. 
 	 * @return The authorized service object.
 	 */
-	 public Object getAuthorizedService(String serviceName) {
+	 public Object getAuthorizedService(String serviceName, String serviceScopes) {
 		 
 		  Object service = null;
 		  
@@ -254,31 +276,42 @@ public class AuthorizedService {
 				dataStoreFactory = new FileDataStoreFactory(DATA_STORE_DIR);
 				
 				
-				
 				// Create authorized service instance.
 				Credential appCredential = null;
 				service = null;
-				String serviceScopes = "";
+				
 				
 				switch(serviceName.toLowerCase()) {
 				
 					case "storage": {
 						// Obtain the credential for the application
-						serviceScopes = StorageScopes.DEVSTORAGE_FULL_CONTROL;
 						appCredential = authorize(serviceScopes);
 						service = new Storage.Builder(httpTransport, JSON_FACTORY, appCredential).setApplicationName(
 						    		APPLICATION_NAME).build();
+						// Store new scope.
+						currentServiceScopes = serviceScopes;
 						break;
 					}
 					case "drive": {
 						// Obtain the credential for the application
-						serviceScopes = DriveScopes.DRIVE;
 						appCredential = authorize(serviceScopes);
 						service = new Drive.Builder(httpTransport, JSON_FACTORY, appCredential).setApplicationName(
 						    		APPLICATION_NAME).build();
+						// Store new scope.
+						currentServiceScopes = serviceScopes;
 						break;
 					}
-
+					case "youtube": {
+						// Obtain the credential for the application
+						// serviceScopes = YouTubeScopes.YOUTUBE_READONLY;
+						// currentServiceScopes = YouTubeScopes.YOUTUBE_UPLOAD;
+						appCredential = authorize(serviceScopes);
+						service = new YouTube.Builder(httpTransport, JSON_FACTORY, appCredential).setApplicationName(
+						    		APPLICATION_NAME).build();
+						// Store new scope.
+						currentServiceScopes = serviceScopes;
+						break;
+					}
 					default: {
 						System.out.println(String.format("Service %s is not allowed.", serviceName));
 						System.out.println(String.format("Allowed services are %s, %s", "storage", "drive"));

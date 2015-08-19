@@ -12,8 +12,9 @@ package com.acloudysky.storage;
 
 import com.acloudysky.storage.DefaultSettings;
 import com.acloudysky.storage.SimpleUI;
-import com.acloudysky.oauth.AuthorizedService;
+
 import com.google.api.services.storage.Storage;
+import com.google.api.services.storage.StorageScopes;
 
 /**
  * Contains the main entry for the console application. 
@@ -58,20 +59,20 @@ public class Main {
 		}
 		
 		// Get authorization to access Google Storage service.
-		Storage storageService = null;
+		Storage storageService = OAuthUtilities.getAuthorizedService(StorageScopes.DEVSTORAGE_FULL_CONTROL);
 		
-		try {
-			// Instantiate the Service class.
-			AuthorizedService service = 
-					new AuthorizedService(".store", "storage_sample", "client_secrets.json");
-			
-			// Get the authorized service so the application can use its  API.
-			storageService = (Storage) service.getAuthorizedService("storage");
-			
-		}
-		catch (Exception e) {
-			String.format("Error %s during service authorization.", e.toString());
-		}
+//		try {
+//			// Instantiate the Service class.
+//			AuthorizedService service = 
+//					new AuthorizedService(".store", "storage_sample", "client_secrets.json");
+//			
+//			// Get the authorized service so the application can use its  API.
+//			storageService = (Storage) service.getAuthorizedService("storage", StorageScopes.DEVSTORAGE_FULL_CONTROL);
+//			
+//		}
+//		catch (Exception e) {
+//			String.format("Error %s during service authorization.", e.toString());
+//		}
 		
 
 		if (storageService != null) {

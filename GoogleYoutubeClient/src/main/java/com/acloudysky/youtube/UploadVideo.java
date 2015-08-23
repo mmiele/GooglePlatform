@@ -49,7 +49,7 @@ public class UploadVideo {
      */
     private static final String VIDEO_FILE_FORMAT = "video/*";
 
-    private static final String SAMPLE_VIDEO_FILENAME = "uncazze.mp4";
+    private static final String SAMPLE_VIDEO_FILENAME = "slackingoff.mp4";
 
     
     /*

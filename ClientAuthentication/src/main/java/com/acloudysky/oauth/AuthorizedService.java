@@ -11,11 +11,13 @@
  **/
  package com.acloudysky.oauth;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.Collections;
+
 
 
 import com.google.api.client.auth.oauth2.Credential;
@@ -34,11 +36,9 @@ import com.google.api.client.json.JsonFactory;
 import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.client.util.store.FileDataStoreFactory;
 import com.google.api.services.drive.Drive;
-import com.google.api.services.drive.DriveScopes;
 import com.google.api.services.storage.Storage;
-import com.google.api.services.storage.StorageScopes;
 import com.google.api.services.youtube.YouTube;
-import com.google.api.services.youtube.YouTubeScopes;
+
 
 
 /**
@@ -68,11 +68,14 @@ public class AuthorizedService {
 	  private  static String base_dir, data_dir;
 	  private  static String clientSecretsFile;
 	
+	  // The name of the file is defined by OAuth. 
+	  private  final static String STORED_CREDENTIAL_FILE = "StoredCredential";
+	  
 	  // Get the current computer OS name and the user home directory. 
 	  private  static String OS = System.getProperty("os.name");
       private  static String home_dir = System.getProperty("user.home");
 	 
-      public static String currentServiceScopes = "";
+      public static String currentServiceScopes = null;
       
       // Directory to store user credentials. 
 	  private java.io.File DATA_STORE_DIR;
@@ -156,14 +159,38 @@ public class AuthorizedService {
         		 filePath = home_dir.concat("/" + data_dir + "/" + clientSecretsFile);
         
         // Test 
-        /*System.out.println(String.format("Home dir: %s", home_dir));
-        System.out.println(String.format("OS: %s", OS));
-        System.out.println(String.format("File path: %s", filePath));*/
-       
+//        System.out.println(String.format("Home dir: %s", home_dir));
+//        System.out.println(String.format("OS: %s", OS));
+//        System.out.println(String.format("File path: %s", filePath));
+//       
         return filePath;
         
 	}
 		
+	  /**
+	   * Calculate the absolute path of the stored credentials file.
+	   * @param dir The name of the directory where the file resides.
+	   * @param fileName The name of the file.
+	   * @return The absolute path of the file.
+	   */
+	  public static String getStoredCredentialFileAbsolutePath () {
+		
+        String filePath = null;
+        
+        if (OS.startsWith("Windows"))
+        	filePath = home_dir.concat("\\" + data_dir + "\\" + STORED_CREDENTIAL_FILE);
+        else 
+        	 if (OS.startsWith("Mac"))
+        		 filePath = home_dir.concat("/" + data_dir + "/" + STORED_CREDENTIAL_FILE);
+        
+        // Test 
+//        System.out.println(String.format("Home dir: %s", home_dir));
+//        System.out.println(String.format("OS: %s", OS));
+//        System.out.println(String.format("File path: %s", filePath));
+//       
+        return filePath;
+        
+	}
 	  
 	/**
 	 * It obtains the credentials for the client application to allow the use of the requested service REST API.
@@ -178,20 +205,21 @@ public class AuthorizedService {
 	 ***/
 	private  Credential authorize(String serviceScopes) throws Exception {
 	   
-		System.out.println(String.format("Current scope: %s", currentServiceScopes));
-		System.out.println(String.format("New scope: %s", serviceScopes));
-	
+		// Test
+//		System.out.println(String.format("Current scope: %s", currentServiceScopes));
+//		System.out.println(String.format("New scope: %s", serviceScopes));
+//	
 		boolean storeCredentials = true;
 		
 		// If the application needs to change service scope while running, like in the Youtube case,
-		// a new authorized service must be created and the owner must grant access to service, again.  
-		// By disabling the storing of the credentials, the owner is prompted to grant access. If the 
-		// application call the service again with the same permissions the credentials are stored and used
-		// from then on without asking the owner's grant.
-		// The check on empty string is to allow the storing of the credentials the first time the 
-		// application runs.
-		if (serviceScopes != currentServiceScopes && ! currentServiceScopes.isEmpty()  ){
+		// a new authorized service must be created and the owner must grant access to the service, again.  
+		// By setting storeCredentials to false the StoredCredential file is deleted and the owner is prompted 
+		// to grant access again. 
+		// If the application calls the service with the same scope the stored credentials are used
+		// without asking the owner's grant.
+		if (serviceScopes != currentServiceScopes){
 			 storeCredentials = false;
+			 currentServiceScopes = serviceScopes;
 		}
 		
 		// Get client secrets file absolute path.
@@ -228,16 +256,32 @@ public class AuthorizedService {
 		    		httpTransport, JSON_FACTORY, clientSecrets,
 			        Collections.singleton(serviceScopes));
 			
-			if (!storeCredentials)
-				// If credentials are not stored the resource owner is
-				// prompted to grant access every time the client app 
-				// restarts.
-				flow = codeFlowBuilder.build();
-			else
-				flow = codeFlowBuilder.setDataStoreFactory(dataStoreFactory).build();
+			if (!storeCredentials) {
+				// The new scope is different from the stored one; delete
+				// the StoredCredential fiel to force owner's grant request.
+				String filePath1 = getStoredCredentialFileAbsolutePath();
+				try{
+		    		
+		    		File file = new File(filePath1);
+		        	
+		    		if(file.delete()){
+		    			System.out.println(file.getName() + " is deleted!");
+		    		}else{
+		    			System.out.println("Delete operation is failed.");
+		    		}
+		    	   
+		    	}catch(Exception e){
+		    		e.printStackTrace();
+		    		
+		    	}
+		
+			}
+			
+			// Perform authorization flow.
+			flow = codeFlowBuilder.setDataStoreFactory(dataStoreFactory).build();
 				
 		    if (flow != null) {
-				// Authorize client app.
+				// Authorize client application.
 				VerificationCodeReceiver rcv = new LocalServerReceiver();
 				appCredentials = 
 					new AuthorizationCodeInstalledApp(flow, rcv).authorize("user");
@@ -303,8 +347,6 @@ public class AuthorizedService {
 					}
 					case "youtube": {
 						// Obtain the credential for the application
-						// serviceScopes = YouTubeScopes.YOUTUBE_READONLY;
-						// currentServiceScopes = YouTubeScopes.YOUTUBE_UPLOAD;
 						appCredential = authorize(serviceScopes);
 						service = new YouTube.Builder(httpTransport, JSON_FACTORY, appCredential).setApplicationName(
 						    		APPLICATION_NAME).build();

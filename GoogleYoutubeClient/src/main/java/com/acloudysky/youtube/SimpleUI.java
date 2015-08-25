@@ -138,7 +138,7 @@ public class SimpleUI {
 			
 			case "u1": {
 				try {
-					UploadVideo.performUpload();
+					VideoActions.performUpload();
 
 				} catch (Exception e) {
 					System.out.println(String.format("%s", e.getMessage()));

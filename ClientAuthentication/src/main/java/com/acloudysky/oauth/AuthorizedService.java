@@ -209,7 +209,7 @@ public class AuthorizedService {
 //		System.out.println(String.format("Current scope: %s", currentServiceScopes));
 //		System.out.println(String.format("New scope: %s", serviceScopes));
 //	
-		boolean storeCredentials = true;
+		boolean useStoredCredentials = true;
 		
 		// If the application needs to change service scope while running, like in the Youtube case,
 		// a new authorized service must be created and the owner must grant access to the service, again.  
@@ -218,7 +218,7 @@ public class AuthorizedService {
 		// If the application calls the service with the same scope the stored credentials are used
 		// without asking the owner's grant.
 		if (serviceScopes != currentServiceScopes){
-			 storeCredentials = false;
+			 useStoredCredentials = false;
 			 currentServiceScopes = serviceScopes;
 		}
 		
@@ -256,9 +256,9 @@ public class AuthorizedService {
 		    		httpTransport, JSON_FACTORY, clientSecrets,
 			        Collections.singleton(serviceScopes));
 			
-			if (!storeCredentials) {
+			if (!useStoredCredentials) {
 				// The new scope is different from the stored one; delete
-				// the StoredCredential fiel to force owner's grant request.
+				// the StoredCredential file to force owner's grant request.
 				String filePath1 = getStoredCredentialFileAbsolutePath();
 				try{
 		    		
@@ -267,7 +267,7 @@ public class AuthorizedService {
 		    		if(file.delete()){
 		    			System.out.println(file.getName() + " is deleted!");
 		    		}else{
-		    			System.out.println("Delete operation is failed.");
+		    			System.out.println("Delete operation failed.");
 		    		}
 		    	   
 		    	}catch(Exception e){

@@ -34,7 +34,7 @@ import java.util.List;
  *
  * @author milexm@gmail.com
  */
-public class UploadVideo {
+public class VideoActions {
 
 	 /**
      * Define a global instance of a Youtube object, which will be used
@@ -134,7 +134,7 @@ public class UploadVideo {
 	
 	            // Handle the transfer of data from an input stream to an output stream. 
 	            InputStreamContent mediaContent = new InputStreamContent(VIDEO_FILE_FORMAT,
-	                    UploadVideo.class.getResourceAsStream("/" + SAMPLE_VIDEO_FILENAME));
+	                    VideoActions.class.getResourceAsStream("/" + SAMPLE_VIDEO_FILENAME));
 	
 	            // Insert the video. The command sends three arguments. The first
 	            // specifies which information the API request is setting and which

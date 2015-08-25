@@ -12,7 +12,7 @@ package com.acloudysky.drive;
 
 import com.google.api.services.drive.Drive;
 import com.google.api.services.drive.DriveScopes;
-import com.acloudysky.oauth.AuthorizedService;
+
 
 /**
  * Contains the main entry for the console application. 

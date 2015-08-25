@@ -16,11 +16,11 @@ import com.google.api.client.http.HttpRequest;
 import com.google.api.client.http.HttpResponse;
 import com.google.api.client.http.HttpResponseException;
 import com.google.api.services.drive.Drive;
-import com.google.api.services.drive.DriveScopes;
+
 import com.google.api.services.drive.Drive.Files;
 import com.google.api.services.drive.model.File;
 import com.google.api.services.drive.model.FileList;
-import com.acloudysky.oauth.AuthorizedService;
+
 import com.google.api.services.drive.model.ParentReference;
 
 import java.io.IOException;

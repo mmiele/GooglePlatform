@@ -70,6 +70,7 @@ public class Main {
 			// defaults.readSettings();
 
 			VideoInformation.initVideoInformation(youtubeService);
+			VideoActions.initVideoActions(youtubeService);
 			
 			// Initialize simple UI and display menu.
 			// Pass the authorized service.

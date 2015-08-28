@@ -47,10 +47,10 @@ import com.google.api.services.youtube.YouTube;
  * <ul>
  * 	<li> It applies to client applications that are of
  * the <b>installed application</b> type. For more information, see 
- * <a href="http://acloudysky.com/?p=1043#usingoauth" target="_blank">
- * Using OAuth2.0 to Access Google APIs</a> </li>
+ * <a href="http://acloudysky.com/?p=1043#serviceApiCredentials" target="_blank">
+ * Create Credentials to Use a Google API in Installed Applications</a> </li>
  * 	<li> Based on the caller' selection, it allows the creation of an authorized 
- * 	service to access service APIs cuch as <a href="https://cloud.google.com/storage/docs/overview" target="_blank">Google Cloud Storage API</a> or 
+ * 	service to access service APIs such as <a href="https://cloud.google.com/storage/docs/overview" target="_blank">Google Cloud Storage API</a> or 
  * <a href="https://developers.google.com/drive/web/about-sdk" target="_blank">Google Drive API</a>.</li>
  * </ul>
  * @author Michael Miele

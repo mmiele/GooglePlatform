@@ -33,7 +33,7 @@ import java.util.Properties;
 
 import com.acloudysky.oauth.AuthorizedService;
 
-/**
+/***
  * Perform tasks on videos uploaded to the authenticated 
  * user's YouTube channel.
  */
@@ -92,7 +92,7 @@ public class VideoInformation {
     }
     
     
-    /**
+    /***
      * Calls the <a href="https://developers.google.com/youtube/v3/docs/channels/list" target="_blank">channels.list</a> 
      * method to retrieve the playlist ID for the list of videos uploaded to the user's channel,
      * Then calls the <a href="https://developers.google.com/youtube/v3/docs/playlistItems/list" target="_blank">playlistItems.list</a> 
@@ -184,7 +184,7 @@ public class VideoInformation {
     	}
     }
 
-    /**
+    /***
      * Initialize a YouTube object to search for videos on YouTube. Then
      * display the name of each video in the result set.
      */

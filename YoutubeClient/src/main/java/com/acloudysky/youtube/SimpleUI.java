@@ -16,7 +16,7 @@ import java.io.IOException;
 
 
 
-/**
+/***
  * Displays the menu of choices the user can select from. It processes the
  * user's input and calls the proper method based on the user's choice.
  * @see FileReader and @see FileWriter. 
@@ -83,8 +83,8 @@ public class SimpleUI {
 
 	}
 
-	/**
-	 * Gets user selection and calls the related method.
+	/***
+	 * Read user selection and call the related method.
 	 */
 	public void processUserInput() {
 

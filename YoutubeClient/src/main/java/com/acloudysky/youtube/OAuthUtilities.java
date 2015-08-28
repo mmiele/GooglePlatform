@@ -23,7 +23,7 @@ public class OAuthUtilities {
 	// serviceScopes = YouTubeScopes.YOUTUBE_READONLY;
 	// currentServiceScopes = YouTubeScopes.YOUTUBE_UPLOAD;
 	
-	/**
+	/***
 	 * Authorizes the application to use Youtube API. 
 	 * <p><b>Note</b>. The method assumes that you already have created a directory to 
 	 * store the file with the client secrets. The directory is .store/youtube_sample. 

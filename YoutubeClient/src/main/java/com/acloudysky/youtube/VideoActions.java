@@ -27,7 +27,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-/**
+/***
  * Upload a video to the authenticated user's channel. Use OAuth 2.0 to
  * authorize the request. Note that you must add your video files to the
  * project folder to upload them with this application.
@@ -122,7 +122,7 @@ public class VideoActions {
  	}
      
     
-    /**
+    /***
      * Upload the user-selected video to the user's YouTube channel. The code
      * looks for the video in the application's project folder and uses OAuth
      * 2.0 to authorize the API request.
@@ -263,7 +263,7 @@ public class VideoActions {
 
         return videoId;
     }
-    /**
+    /***
      * Update the user-selected video in the user's YouTube channel. The code
      * looks for the video in the application's project folder and uses OAuth
      * 2.0 to authorize the API request.

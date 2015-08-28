@@ -29,7 +29,7 @@ public class Main {
 	 * Main entry point which displays the start greetings.
 	 * Most importantly, it delegates to the SimpleUI class the display of the selection menu 
 	 * and the processing of the user's input. 
-	 * @see SimpleUI#SimpleUI(Drive)
+	 * @see SimpleUI#SimpleUI()
 	 * @param args; 
 	 *  args[0] = "Michael"
 	 *  args[1] = "Google Youtube Console Application"

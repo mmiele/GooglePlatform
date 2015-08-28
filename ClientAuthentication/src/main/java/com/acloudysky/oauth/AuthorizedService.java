@@ -41,7 +41,7 @@ import com.google.api.services.youtube.YouTube;
 
 
 
-/**
+/***
  * The AuthorizedService class creates a service object that is authorized to 
  * access the selected Google service API. 
  * <ul>
@@ -88,22 +88,22 @@ public class AuthorizedService {
 	  }
 
 	
-	/**
+	  /*
 	   * Global instance of the {@link DataStoreFactory}. The best practice is to make it a single
 	   * globally shared instance across your application.
 	   */
 	  private static FileDataStoreFactory dataStoreFactory;
 	
-	  /** Global instance of the HTTP transport. */
-		  private  HttpTransport httpTransport;
+	  /* Global instance of the HTTP transport. */
+	  private static HttpTransport httpTransport;
 	 
 		  // Key fields.....
 	  
-	  /** Global instance of the JSON factory. */
-	  private  final JsonFactory JSON_FACTORY = JacksonFactory.getDefaultInstance();
+	  /* Global instance of the JSON factory. */
+	  private  static final JsonFactory JSON_FACTORY = JacksonFactory.getDefaultInstance();
 	  
 
-	  /**
+	  /***
 	   * Class constructor.
 	   * @param baseDir The parent directory
 	   * @param sampleDir The directory containing the file with the client secrets.
@@ -173,7 +173,7 @@ public class AuthorizedService {
 	   * @param fileName The name of the file.
 	   * @return The absolute path of the file.
 	   */
-	  public static String getStoredCredentialFileAbsolutePath () {
+	  private static String getStoredCredentialFileAbsolutePath () {
 		
         String filePath = null;
         
@@ -203,7 +203,7 @@ public class AuthorizedService {
 	 * @return appCredentials The client application credentials.
 	 * @throws Exception
 	 ***/
-	private  Credential authorize(String serviceScopes) throws Exception {
+	private static Credential authorize(String serviceScopes) throws Exception {
 	   
 		// Test
 //		System.out.println(String.format("Current scope: %s", currentServiceScopes));
@@ -299,11 +299,12 @@ public class AuthorizedService {
 
 	/**
 	 * Create authorized service to allow the application to use the
-	 * Google service REST API.
-	 * @param serviceName The service name such as: storage, drive. 
+	 * service REST API.
+	 * @param serviceName The service name such as: storage, drive, youtube, etc.. 
+	 * @param serviceScope The scope for which to obtain authorization.
 	 * @return The authorized service object.
 	 */
-	 public Object getAuthorizedService(String serviceName, String serviceScopes) {
+	 public Object getAuthorizedService(String serviceName, String serviceScope) {
 		 
 		  Object service = null;
 		  
@@ -329,29 +330,29 @@ public class AuthorizedService {
 				
 					case "storage": {
 						// Obtain the credential for the application
-						appCredential = authorize(serviceScopes);
+						appCredential = authorize(serviceScope);
 						service = new Storage.Builder(httpTransport, JSON_FACTORY, appCredential).setApplicationName(
 						    		APPLICATION_NAME).build();
 						// Store new scope.
-						currentServiceScopes = serviceScopes;
+						currentServiceScopes = serviceScope;
 						break;
 					}
 					case "drive": {
 						// Obtain the credential for the application
-						appCredential = authorize(serviceScopes);
+						appCredential = authorize(serviceScope);
 						service = new Drive.Builder(httpTransport, JSON_FACTORY, appCredential).setApplicationName(
 						    		APPLICATION_NAME).build();
 						// Store new scope.
-						currentServiceScopes = serviceScopes;
+						currentServiceScopes = serviceScope;
 						break;
 					}
 					case "youtube": {
 						// Obtain the credential for the application
-						appCredential = authorize(serviceScopes);
+						appCredential = authorize(serviceScope);
 						service = new YouTube.Builder(httpTransport, JSON_FACTORY, appCredential).setApplicationName(
 						    		APPLICATION_NAME).build();
 						// Store new scope.
-						currentServiceScopes = serviceScopes;
+						currentServiceScopes = serviceScope;
 						break;
 					}
 					default: {

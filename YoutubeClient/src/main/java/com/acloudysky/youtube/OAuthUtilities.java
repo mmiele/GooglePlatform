@@ -13,28 +13,44 @@ package com.acloudysky.youtube;
 import com.acloudysky.oauth.AuthorizedService;
 import com.google.api.services.youtube.YouTube;
 
-
+/**
+ * This class contains utility methods to handle authorization tasks.
+ * @author michael
+ *
+ */
 public class OAuthUtilities {
 	
 	// serviceScopes = YouTubeScopes.YOUTUBE_READONLY;
 	// currentServiceScopes = YouTubeScopes.YOUTUBE_UPLOAD;
 	
-	public static YouTube getAuthorizedService(String serviceScopes) {
+	/**
+	 * Authorizes the application to use Youtube API. 
+	 * <p><b>Note</b>. The method assumes that you already have created a directory to 
+	 * store the file with the client secrets. The directory is .store/youtube_sample. 
+	 * The file containing the secrets is client_secrets.json.
+	 * @param serviceScope - The scope for which to obtain the authorization.
+	 * The values for the scope can be found at 
+	 * <a href="https://developers.google.com/resources/api-libraries/documentation/youtube/v3/java/latest/com/google/api/services/youtube/YouTubeScopes.html" target="_blank">Class YouTubeScopes</a>.
+	 * @return The object that represents the authorized service.
+	 */
+	public static YouTube getAuthorizedService(String serviceScope) {
 		
 		YouTube youtubeService = null;
 				
 		try {
 			
 			// Instantiate the Service class.
+			// Important. This method assumes that you have created the 
+			// .store/youtube_sample/client_secrets.json file.
 			AuthorizedService service = 
 					new AuthorizedService(".store", "youtube_sample", "client_secrets.json");
 		
 			// Get the authorized service so the application can use its API.
-			youtubeService = (YouTube) service.getAuthorizedService("youtube", serviceScopes);
+			youtubeService = (YouTube) service.getAuthorizedService("youtube", serviceScope);
 			
 		}
 		catch (Exception e) {
-			String.format("Error %s during service authorization.", e.toString());
+			String.format("getAuthorizedService error %s.", e.toString());
 		}
 		return youtubeService;
 		

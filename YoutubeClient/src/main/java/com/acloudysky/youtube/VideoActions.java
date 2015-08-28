@@ -20,12 +20,6 @@ import com.google.api.services.youtube.model.Video;
 import com.google.api.services.youtube.model.VideoListResponse;
 import com.google.api.services.youtube.model.VideoSnippet;
 import com.google.api.services.youtube.model.VideoStatus;
-
-
-
-
-
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -55,6 +49,8 @@ public class VideoActions {
      */
     private static final String VIDEO_FILE_FORMAT = "video/*";
 
+    // This file must be already present in the resources folder.
+    // Change the name accordingly.
     private static final String SAMPLE_VIDEO_FILENAME = "slackingoff.mp4";
 
     
@@ -118,17 +114,23 @@ public class VideoActions {
     	System.out.println(buffer.toString());
     }
     
+    public static void initVideoActions(YouTube authorizedService) {
+		
+ 		// Initialize authorized youtube service.
+     	youtubeService = authorizedService;
+ 		
+ 	}
+     
+    
     /**
      * Upload the user-selected video to the user's YouTube channel. The code
      * looks for the video in the application's project folder and uses OAuth
      * 2.0 to authorize the API request.
      *
-     * @param args command line args (not used).
      */
     public static void performUpload() {
 
     	try {
-            
         		// Get the authenticated service with the proper scope. This is needed because the
     			// application uses different scopes.
         		youtubeService=	OAuthUtilities.getAuthorizedService(YouTubeScopes.YOUTUBE_UPLOAD);
@@ -195,90 +197,34 @@ public class VideoActions {
 	            
 	
 	        } catch (GoogleJsonResponseException e) {
-	        	int httpError = e.getDetails().getCode();
-	            System.err.println("GoogleJsonResponseException code: " + httpError + " : "
-	                    + e.getDetails().getMessage());
-	            e.printStackTrace();
-	            if (httpError == 403) {
-	            	 System.err.println("Do someting to fix 403");
-	            	// Re-authorize the request.
-	             	youtubeService=	OAuthUtilities.getAuthorizedService(YouTubeScopes.YOUTUBE_UPLOAD);
+	        		int httpError = e.getDetails().getCode();
+	          
+	        		if (httpError == 403) {
+	        			System.err.println("Do someting to fix 403");
+	        			// Usually this error is caused by the wrong scope contained in the StoredCredential file.
+	                	// Get the authenticated service with the proper scope. This is needed because the
+	        			// application uses different scopes. For more information, 
+	                	// see <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html">access forbidden</a>
+	                	youtubeService = OAuthUtilities.getAuthorizedService(YouTubeScopes.YOUTUBE_UPLOAD);
+	        		}
+	        		else  
+	            	 System.err.println("GoogleJsonResponseException code: " + httpError + " : "
+	  	                    + e.getDetails().getMessage());
+	  	            e.printStackTrace();
 	            }
-            
-        } catch (IOException e) {
-            System.err.println("IOException: " + e.getMessage());
-            e.printStackTrace();
-        } catch (Throwable t) {
-            System.err.println("Throwable: " + t.getMessage());
-            t.printStackTrace();
-        }
+	        	catch (IOException e) {
+	        		System.err.println("IOException: " + e.getMessage());
+	        		e.printStackTrace();
+	        	} 
+    			catch (Throwable t) {
+    				System.err.println("Throwable: " + t.getMessage());
+    				t.printStackTrace();
+	        	}
     }
     
-    public static void performUpdate() {
-    	
-        try {
-        	// Get the authenticated service with the proper scope. This is needed because the
-			// application uses different scopes.
-    		youtubeService=	OAuthUtilities.getAuthorizedService(YouTubeScopes.YOUTUBE);
-        
-            // Prompt the user to enter the video ID of the video being updated.
-            String videoId = getVideoIdFromUser();
-            System.out.println("You chose " + videoId + " to update.");
-
-            // Prompt the user to enter a keyword tag to add to the video.
-            String tag = getTagFromUser();
-            System.out.println("You chose " + tag + " as a tag.");
-
-            // Call the YouTube Data API's youtube.videos.list method to
-            // retrieve the resource that represents the specified video.
-            YouTube.Videos.List listVideosRequest = youtubeService.videos().list("snippet").setId(videoId);
-            VideoListResponse listResponse = listVideosRequest.execute();
-
-            // Since the API request specified a unique video ID, the API
-            // response should return exactly one video. If the response does
-            // not contain a video, then the specified video ID was not found.
-            List<Video> videoList = listResponse.getItems();
-            if (videoList.isEmpty()) {
-                System.out.println("Can't find a video with ID: " + videoId);
-                return;
-            }
-
-            // Extract the snippet from the video resource.
-            Video video = videoList.get(0);
-            VideoSnippet snippet = video.getSnippet();
-
-            // Preserve any tags already associated with the video. If the
-            // video does not have any tags, create a new array. Append the
-            // provided tag to the list of tags associated with the video.
-            List<String> tags = snippet.getTags();
-            if (tags == null) {
-                tags = new ArrayList<String>(1);
-                snippet.setTags(tags);
-            }
-            tags.add(tag);
-
-            // Update the video resource by calling the videos.update() method.
-            YouTube.Videos.Update updateVideosRequest = youtubeService.videos().update("snippet", video);
-            Video videoResponse = updateVideosRequest.execute();
-
-            // Print information from the updated resource.
-            System.out.println("\n================== Returned Video ==================\n");
-            System.out.println("  - Title: " + videoResponse.getSnippet().getTitle());
-            System.out.println("  - Tags: " + videoResponse.getSnippet().getTags());
-
-        } catch (GoogleJsonResponseException e) {
-            System.err.println("GoogleJsonResponseException code: " + e.getDetails().getCode() + " : "
-                    + e.getDetails().getMessage());
-            e.printStackTrace();
-        } catch (IOException e) {
-            System.err.println("IOException: " + e.getMessage());
-            e.printStackTrace();
-        } catch (Throwable t) {
-            System.err.println("Throwable: " + t.getMessage());
-            t.printStackTrace();
-        }
-    }
-
+    /*
+     *** Utilities ***
+     */
     /*
      * Prompt the user to enter a keyword tag.
      */
@@ -291,7 +237,7 @@ public class VideoActions {
         keyword = bReader.readLine();
 
         if (keyword.length() < 1) {
-            // If the user doesn't enter a tag, use the default value "New Tag."
+            // If the user doesn't enter a tag, use the default value.
             keyword = "SlackingOff";
         }
         return keyword;
@@ -317,6 +263,83 @@ public class VideoActions {
 
         return videoId;
     }
-
+    /**
+     * Update the user-selected video in the user's YouTube channel. The code
+     * looks for the video in the application's project folder and uses OAuth
+     * 2.0 to authorize the API request.
+     *
+     */
+    public static void performUpdate() {
     	
+        try {
+	            // Prompt the user to enter the video ID of the video being updated.
+	            String videoId = getVideoIdFromUser();
+	            System.out.println("You chose " + videoId + " to update.");
+	
+	            // Prompt the user to enter a keyword tag to add to the video.
+	            String tag = getTagFromUser();
+	            System.out.println("You chose " + tag + " as a tag.");
+	
+	            // Call the YouTube Data API's youtube.videos.list method to
+	            // retrieve the resource that represents the specified video.
+	            YouTube.Videos.List listVideosRequest = youtubeService.videos().list("snippet").setId(videoId);
+	            VideoListResponse listResponse = listVideosRequest.execute();
+	
+	            // Since the API request specified a unique video ID, the API
+	            // response should return exactly one video. If the response does
+	            // not contain a video, then the specified video ID was not found.
+	            List<Video> videoList = listResponse.getItems();
+	            if (videoList.isEmpty()) {
+	                System.out.println("Can't find a video with ID: " + videoId);
+	                return;
+	            }
+	
+	            // Extract the snippet from the video resource.
+	            Video video = videoList.get(0);
+	            VideoSnippet snippet = video.getSnippet();
+	
+	            // Preserve any tags already associated with the video. If the
+	            // video does not have any tags, create a new array. Append the
+	            // provided tag to the list of tags associated with the video.
+	            List<String> tags = snippet.getTags();
+	            if (tags == null) {
+	                tags = new ArrayList<String>(1);
+	                snippet.setTags(tags);
+	            }
+	            tags.add(tag);
+	
+	            // Update the video resource by calling the videos.update() method.
+	            YouTube.Videos.Update updateVideosRequest = youtubeService.videos().update("snippet", video);
+	            Video videoResponse = updateVideosRequest.execute();
+	
+	            // Print information from the updated resource.
+	            System.out.println("\n================== Returned Video ==================\n");
+	            System.out.println("  - Title: " + videoResponse.getSnippet().getTitle());
+	            System.out.println("  - Tags: " + videoResponse.getSnippet().getTags());
+
+        } catch (GoogleJsonResponseException e) {
+    		int httpError = e.getDetails().getCode();
+	          
+    		if (httpError == 403) {
+    			System.err.println("Do someting to fix 403");
+    			// Usually this error is caused by the wrong scope contained in the StoredCredential file.
+            	// Get the authenticated service with the proper scope. This is needed because the
+    			// application uses different scopes. For more information, 
+            	// see <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html">access forbidden</a>
+            	youtubeService = OAuthUtilities.getAuthorizedService(YouTubeScopes.YOUTUBE);
+    		}
+    		else  
+        	 System.err.println("GoogleJsonResponseException code: " + httpError + " : "
+	                    + e.getDetails().getMessage());
+	            e.printStackTrace();
+        }
+    	catch (IOException e) {
+    		System.err.println("IOException: " + e.getMessage());
+    		e.printStackTrace();
+    	} 
+		catch (Throwable t) {
+			System.err.println("Throwable: " + t.getMessage());
+			t.printStackTrace();
+    	}
+    } 	
 }

@@ -174,7 +174,7 @@ public class AuthorizedService {
 	   * @param fileName The name of the file.
 	   * @return The absolute path of the file.
 	   */
-	  private static String getStoredCredentialFileAbsolutePath () {
+	  public static String getStoredCredentialFileAbsolutePath () {
 		
         String filePath = null;
         

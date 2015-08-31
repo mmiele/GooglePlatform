@@ -170,8 +170,6 @@ public class AuthorizedService {
 		
 	  /**
 	   * Calculate the absolute path of the stored credentials file.
-	   * @param dir The name of the directory where the file resides.
-	   * @param fileName The name of the file.
 	   * @return The absolute path of the file.
 	   */
 	  public static String getStoredCredentialFileAbsolutePath () {

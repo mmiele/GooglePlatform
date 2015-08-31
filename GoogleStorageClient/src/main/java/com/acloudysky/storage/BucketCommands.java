@@ -21,6 +21,11 @@ import com.google.api.services.storage.model.Bucket;
 import com.google.api.services.storage.model.ObjectAccessControl;
 import com.google.common.collect.ImmutableList;
 
+/***
+ * Contains methods to perform Google Cloud Storage bucket operations.
+ * @author Michael
+ *
+ */
 public class BucketCommands {
 	
 	// Cloud Storage authenticated service.
@@ -30,8 +35,7 @@ public class BucketCommands {
 	private static DefaultSettings settings;
 	
 	/**
-	 * Initialize authenticated storage service using default 
-	 * settings.
+	 * Initialize authenticated storage service using default settings.
 	 * @param authorizedService The storage authorized service
 	 * @param defaultSettings The default settings in JSON format
 	 */
@@ -48,23 +52,33 @@ public class BucketCommands {
 	/*
 	 * ******** Utility Methods   *********
 	 */
-	 static void displayMessageHeader(String name) {
-	      System.out.println();
-	      System.out.println("================== " + name + " ==================");
-	      System.out.println();
-	    }
+	
+	/*
+	 * Display header information for the user.
+	 */
+	 static private void displayMessageHeader(String name) {
+		 StringBuffer header = new StringBuffer();
+		 header.append(String.format("%n==================  %s ==================%n", name));
+		 // Display header.
+		 System.out.println(header.toString());
+	 }
 	    
-	    
-	 static void displayBucketInformation(Bucket bucket) {
-	      System.out.println("name: " + bucket.getName());
-	      System.out.println("location: " + bucket.getLocation());
-	      System.out.println("timeCreated: " + bucket.getTimeCreated());
-	      System.out.println("owner: " + bucket.getOwner());
-	      System.out.println("acl: " + bucket.getAcl());
+	 /*
+	  * Display bucket information. 
+	  */
+	 static private void displayBucketInformation(Bucket bucket) {
+		 StringBuffer results = new StringBuffer();
+		 results.append(String.format("%n name %s %n", bucket.getName()));
+		 results.append(String.format(" location %s %n", bucket.getLocation()));
+		 results.append(String.format(" timeCreated %s %n", bucket.getTimeCreated()));
+		 results.append(String.format(" owner %s %n", bucket.getOwner()));
+		 results.append(String.format(" acl %s %n", bucket.getAcl()));
 	      
+	   // Display header.
+			System.out.println(results.toString());
 	    }
 	
-	/**
+	/***
 	 * Create a bucket with the specified name in the specified project.
 	 * If successful, return the created bucket metadata.
 	 * <p>
@@ -110,7 +124,7 @@ public class BucketCommands {
 	    return bucketCreated;
 	  }
 
-	 /**
+	 /***
 	  * Retrieve the specified bucket metadata.
 	  * <p>
 	  * For more information, see <a href="https://cloud.google.com/storage/docs/json_api/v1/buckets/get" 

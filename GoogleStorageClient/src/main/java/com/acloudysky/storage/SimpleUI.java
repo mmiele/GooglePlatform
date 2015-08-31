@@ -12,7 +12,6 @@ package com.acloudysky.storage;
 
 
 import java.io.BufferedReader;
-
 import java.io.IOException;
 
 /***
@@ -97,7 +96,7 @@ public class SimpleUI {
 				else
 					if ("m".equals(selection)) {
 						// Display menu
-						displayMenu();
+						System.out.println(menu.toString());
 						continue;
 					}
 					else 

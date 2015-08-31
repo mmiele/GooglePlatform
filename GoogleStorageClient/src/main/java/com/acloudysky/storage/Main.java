@@ -25,9 +25,10 @@ public class Main {
 
 	 
 	/***
-     * Main entry point which displays the start greetings. It performs the 
+     * Main entry point which displays the start greetings and performs the 
      * following main tasks:
      * <ul>
+     *      <li>Gets authorization to access Google Storage service.</li> 
      *		<li>Reads the default settings.</li>
      * 		<li>Instantiates the command classes.</li>
 	 * 		<li>Delegates to the SimpleUI class the display of the selection 
@@ -59,20 +60,8 @@ public class Main {
 		}
 		
 		// Get authorization to access Google Storage service.
-		Storage storageService = OAuthUtilities.getAuthorizedService(StorageScopes.DEVSTORAGE_FULL_CONTROL);
-		
-//		try {
-//			// Instantiate the Service class.
-//			AuthorizedService service = 
-//					new AuthorizedService(".store", "storage_sample", "client_secrets.json");
-//			
-//			// Get the authorized service so the application can use its  API.
-//			storageService = (Storage) service.getAuthorizedService("storage", StorageScopes.DEVSTORAGE_FULL_CONTROL);
-//			
-//		}
-//		catch (Exception e) {
-//			String.format("Error %s during service authorization.", e.toString());
-//		}
+		Storage storageService = 
+				OAuthUtilities.getAuthorizedService(StorageScopes.DEVSTORAGE_FULL_CONTROL);
 		
 
 		if (storageService != null) {

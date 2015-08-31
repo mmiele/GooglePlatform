@@ -20,9 +20,6 @@ import com.google.api.services.youtube.YouTube;
  */
 public class OAuthUtilities {
 	
-	// serviceScopes = YouTubeScopes.YOUTUBE_READONLY;
-	// currentServiceScopes = YouTubeScopes.YOUTUBE_UPLOAD;
-	
 	/***
 	 * Authorizes the application to use Youtube API. 
 	 * <p><b>Note</b>. The method assumes that you already have created a directory to 

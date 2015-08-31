@@ -15,13 +15,11 @@ import java.io.BufferedReader;
 
 import java.io.IOException;
 
-
-
-/**
- * Displays the menu of choices the user can select from. It processes the
- * user's input and calls the proper method based on the user's selection.
+/***
+ * Displays a selection menu for the user. It processes the
+ * user's input and calls the proper method based on the user's choice.
  * Each method calls the related 
- * <a href="https://developers.google.com/api-client-library/java/apis/storage/v1beta2" target="_blank">Cloud Storage REST API</a>.
+ * <a href="https://developers.google.com/api-client-library/java/apis/storage/v1beta2" target="_blank">Cloud Storage API</a>.
  * @author Michael.
  *
  */
@@ -210,11 +208,6 @@ public class SimpleUI {
 		
 	}
 
-	public void displayMenu() {
-		
-		System.out.println(menu.toString());
-		
-	}
 	
 	private static void Exit() {
 		System.out.println("Bye!\n");

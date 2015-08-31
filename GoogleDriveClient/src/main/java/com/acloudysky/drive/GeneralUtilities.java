@@ -17,9 +17,9 @@ import com.google.api.client.http.HttpHeaders;
 import com.google.api.client.http.HttpRequest;
 import com.google.api.client.http.HttpResponse;
 
-/**
+/***
  * Define general utilities to help with housekeeping and routine tasks.
- * @author mmiele
+ * @author Michael
  *
  */
 public class GeneralUtilities {
@@ -57,7 +57,7 @@ public class GeneralUtilities {
 		
 	}
 	
-	/**
+	/***
 	 * Display an HTTP response header information.
 	 * @param response The response whose information must be displayed.
 	 */

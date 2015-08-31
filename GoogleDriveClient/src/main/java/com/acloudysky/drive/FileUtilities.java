@@ -19,7 +19,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 
-/**
+/***
  * Contains utility methods to handle file operations.
  * @author Michael
  *
@@ -33,7 +33,7 @@ public class FileUtilities {
 	 * @param fileName - the name of the file for which to get the absolute path.
 	 * @return - the absolute path of the file.
 	 */
-	/**
+	/***
 	 * Calculate the absolute path of a file.
 	 * @param dir The name of the directory where the file resides.
 	 * @param fileName The name of the file.
@@ -62,7 +62,7 @@ public class FileUtilities {
 	}
 
 	
-	/**
+	/***
 	 * Copy an input stream to a file.
 	 * @param inStream The input stream to read from.
 	 * @param dir The name of the file directory.
@@ -99,7 +99,7 @@ public class FileUtilities {
 	}
 
 
-	/**
+	/***
 	 * Copy an existing file to a new file.
 	 * @param dir The name of the directory where the files reside.
 	 * @param inFileName The name of the file to copy from.

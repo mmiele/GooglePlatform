@@ -15,13 +15,17 @@ import java.util.Random;
 
 import com.google.api.client.googleapis.media.MediaHttpUploader;
 import com.google.api.client.googleapis.media.MediaHttpUploaderProgressListener;
-// import com.google.common.base.Stopwatch;
 import com.google.common.base.Stopwatch;
 
+/***
+ * Contains auxiliary classes to perform object upload.
+ * @author Michael
+ *
+ */
 public class ObjectLoaderUtility {
 
 	
-	/**
+	  /***
 	   * Generates a random data block and repeats it to provide the stream.
 	   * Using a buffer instead of just filling from java.util.Random because the latter causes
 	   * noticeable lag in stream reading, which detracts from upload speed. This class takes all that
@@ -75,13 +79,15 @@ public class ObjectLoaderUtility {
 	    }
 	  }
 
+	  /***
+	   * Implements a progress listener to be invoked during object upload.
+	   * @author michael
+	   *
+	   */
 	  public static class CustomUploadProgressListener implements MediaHttpUploaderProgressListener {
 	    
 		private final Stopwatch stopwatch = Stopwatch.createStarted();
 	    
-//	    public  CustomUploadProgressListener() {
-//	    }
-
 	    public void progressChanged(MediaHttpUploader uploader) {
 	      switch (uploader.getUploadState()) {
 	        case INITIATION_STARTED:
@@ -92,7 +98,7 @@ public class ObjectLoaderUtility {
 	          System.out.println("Initiation is complete!");
 	          break;
 	        case MEDIA_IN_PROGRESS:
-	          // TODO(nherring): Progress works iff you have a content length specified.
+	          // TODO(nherring): Progress works if you have a content length specified.
 	          // System.out.println(uploader.getProgress());
 	          System.out.println(uploader.getNumBytesUploaded());
 	          break;

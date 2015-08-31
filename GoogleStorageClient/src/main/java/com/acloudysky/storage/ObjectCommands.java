@@ -22,6 +22,11 @@ import com.google.api.services.storage.model.Objects;
 import com.google.api.services.storage.model.StorageObject;
 import com.google.common.collect.ImmutableMap;
 
+/**
+ * Contains methods to perform Google Cloud Storage object operations.
+ * @author Michael
+ *
+ */
 public class ObjectCommands {
 	
 
@@ -31,7 +36,7 @@ public class ObjectCommands {
 	// Settings applicable to the current application.
 	private static DefaultSettings settings;
 		
-	/**
+	/***
 	 * Initialize authenticated storage service and
 	 * settings applicable to the application.
 	 * @param defaultSettings Default settings in JSON format
@@ -46,49 +51,68 @@ public class ObjectCommands {
 		// Initialize sample settings.
 		settings = 	defaultSettings;
 	}
+	
+	
+	
 
 	/*
 	 * ******** Utility Methods   *********
 	 */
-	 static void displayMessageHeader(String name) {
-	      System.out.println();
-	      System.out.println("================== " + name + " ==================");
-	      System.out.println();
-	    }
+	
+	/*
+	 * Display header information for the user.
+	 */
+	 static private void displayMessageHeader(String name) {
+		 StringBuffer header = new StringBuffer();
+		 header.append(String.format("%n==================  %s ==================%n", name));
+		 // Display header.
+		 System.out.println(header.toString());
+	 }
 	    
-	 private static void displayMessageHeader2(String name) {
-		      System.out.println();
-		      System.out.println("~~~~~~~~~~~~~~~~~~ " + name + " ~~~~~~~~~~~~~~~~~~");
-		      System.out.println();
-		    }
-	    
-	 static void displayBucketInformation(Bucket bucket) {
-	      System.out.println("name: " + bucket.getName());
-	      System.out.println("location: " + bucket.getLocation());
-	      System.out.println("timeCreated: " + bucket.getTimeCreated());
-	      System.out.println("owner: " + bucket.getOwner());
-	      System.out.println("acl: " + bucket.getAcl());
+	 /*
+	  * Display bucket information. 
+	  */
+	 static private void displayBucketInformation(Bucket bucket) {
+		 StringBuffer results = new StringBuffer();
+		 results.append(String.format("%n name %s %n", bucket.getName()));
+		 results.append(String.format(" location %s %n", bucket.getLocation()));
+		 results.append(String.format(" timeCreated %s %n", bucket.getTimeCreated()));
+		 results.append(String.format(" owner %s %n", bucket.getOwner()));
+		 results.append(String.format(" acl %s %n", bucket.getAcl()));
 	      
-	    }
+		 // Display header.
+		 System.out.println(results.toString());
+	 }
+	
+	 static private void displayObjectInformation(StorageObject object) {
+		 StringBuffer results = new StringBuffer();
+		 results.append(String.format("%n name %s %n", object.getName()));
+		 results.append(String.format(" size %d %n", object.getSize()));
+		 results.append(String.format(" content type %s %n", object.getContentType()));
+		 results.append(String.format(" owner %s %n", object.getOwner()));
+		 results.append(String.format(" updated %s %n", object.getUpdated()));
+	      
+		 // Display header.
+		 System.out.println(results.toString());
+	 }
 	 
-	 private static void displayObjectInformation(StorageObject object) {
-	      System.out.println("name: " + object.getName());
-	      System.out.println("size: " + object.getSize());
-	      System.out.println("contentType: " + object.getContentType());
-	      System.out.println("updated: " + object.getUpdated());
-	      System.out.println("owner: " + object.getOwner());
-	      // should only show up if projection is full.
-	      // System.out.println("acl: " + object.getAcl());
-	    }
+	 static private void displayMessageHeader2(String name) {
+		 StringBuffer header = new StringBuffer();
+		 header.append(String.format("%n~~~~~~~~~~~~~~~~~~  %s ~~~~~~~~~~~~~~~~~~%n", name));
+		 // Display header.
+		 System.out.println(header.toString());
+	 }
 	 
-	 private static void displaySeparator() {
-	      System.out.println();
-	      System.out.println("------------------------------------------------------");
-	      System.out.println();
-	    }
-
 	 
-	/**
+	 static private void displaySeparator() {
+		 StringBuffer buffer = new StringBuffer();
+		 buffer.append(String.format("------------------------------------------------------"));
+		 // Display header.
+		 System.out.println(buffer.toString());
+	 }
+	 
+	
+	/***
 	 * Retrieve a list of objects contained by a bucket. 
 	 * Display metadata for all the objects contained in the bucket.
 	 * <p>
@@ -143,7 +167,7 @@ public class ObjectCommands {
 	    }
 	  }
 	
-	/**
+	/***
 	 * Display an object metadata.
 	 * <p>
 	 * For more information, see <a href="https://cloud.google.com/storage/docs/json_api/v1/objects/get" 
@@ -187,7 +211,7 @@ public class ObjectCommands {
 	    displayObjectInformation(object);
 	  }
 	
-	/**
+	/***
 	 * Upload an object.
 	 * @param useCustomMetadata true if to sue cuetom metadata; otherwise, false
 	 * @throws IOException IO error

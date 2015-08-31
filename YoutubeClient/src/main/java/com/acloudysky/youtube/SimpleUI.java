@@ -17,9 +17,10 @@ import java.io.IOException;
 
 
 /***
- * Displays the menu of choices the user can select from. It processes the
+ * Displays a selection menu for the user. It processes the
  * user's input and calls the proper method based on the user's choice.
- * @see FileReader and @see FileWriter. 
+ * Each method calls the related 
+ * <a href="https://developers.google.com/youtube/v3/docs/" target="_blank">Youtube API</a>.
  * 
  * @author Michael.
  *
@@ -168,11 +169,6 @@ public class SimpleUI {
 
 	}
 
-	public void displayMenu() {
-
-		//	System.out.println(menu.toString());
-
-	}
 
 	private static void Exit() {
 		System.out.println("Bye!\n");

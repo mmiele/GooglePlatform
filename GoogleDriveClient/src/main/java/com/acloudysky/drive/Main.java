@@ -48,7 +48,9 @@ public class Main {
 			System.exit(1);
 		}
 		
-		Drive driveService = OAuthUtilities.getAuthorizedService(DriveScopes.DRIVE);
+		// Get authorized service using default scope.
+		Drive driveService = 
+				OAuthUtilities.getAuthorizedService(DriveScopes.DRIVE);
 		
 		if (driveService != null) {
 			/*
@@ -63,7 +65,6 @@ public class Main {
 			defaults.readSettings();
 			
 			// Initialize simple UI and display menu.
-			// Pass the authorized service.
 			SimpleUI sui = new SimpleUI(driveService);
 	
 			// Process user's input.

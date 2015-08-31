@@ -36,10 +36,8 @@ public class SimpleUI {
 	private static FileCommands files;
 
 	/**
-	 * Initializes the menu that allows the user to make the 
-	 * allowed choices.
-	 * <p>
-	 * It uses a StringBuilder to create the formatted menu </p>
+	 * Initializes the menu that allows the user to make the allowed choices.
+	 * It uses a StringBuilder to create the formatted menu.
 	 */
 	SimpleUI(Drive authorizedService) {
 		menu = new StringBuilder();

@@ -15,10 +15,10 @@ import java.io.BufferedReader;
 import java.io.IOException;
 
 /***
- * Displays a selection menu for the user. It processes the
- * user's input and calls the proper method based on the user's choice.
- * Each method calls the related 
+ * Display a selection menu for the user. Process user's input and call the proper method.
+ * <p> <b>Note</b>. Each method calls the related 
  * <a href="https://developers.google.com/api-client-library/java/apis/storage/v1beta2" target="_blank">Cloud Storage API</a>.
+ * </p>
  * @author Michael.
  *
  */
@@ -28,10 +28,7 @@ public class SimpleUI {
 	public static final String newline = System.getProperty("line.separator");
 
 	/**
-	 * Initializes the menu that allows the user to make the 
-	 * allowed choices.
-	 * <p>
-	 * It uses a StringBuilder to create the formatted menu </p>
+	 * Initialize the user's menu and display it.
 	 */
 	SimpleUI() {
 		menu = new StringBuilder();
@@ -78,8 +75,9 @@ public class SimpleUI {
 		return selection;
 
 	}
+	
 	/**
-	 * Gets user selection and calls the related method.
+	 * Get user selection and call the related method.
 	 */
 	public void processUserInput() {
 		
@@ -207,7 +205,9 @@ public class SimpleUI {
 		
 	}
 
-	
+	/**
+	 * Exit the application.
+	 */
 	private static void Exit() {
 		System.out.println("Bye!\n");
 		return;

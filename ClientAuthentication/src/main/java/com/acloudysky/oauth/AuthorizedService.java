@@ -41,12 +41,11 @@ import com.google.api.services.youtube.YouTube;
 
 
 /***
- * The AuthorizedService class creates a service object that is authorized to 
- * access the selected Google service API. 
+ * Create a service object that is authorized to access the selected Google service API. 
  * <ul>
- * 	<li> It applies to client applications that are of the <b>installed application</b> type. For more information,
- * <a href="http://acloudysky.com/?p=1043#serviceApiCredentials" target="_blank">Create Credentials to Use a Google API in Installed Applications</a>. </li>
- * 	<li> Based on the caller' selection, it allows the creation of an authorized service to access the following service APIs: 
+ * 	<li> It applies to <b>installed applications</b>. See also
+ * <a href="http://acloudysky.com/?p=1043#serviceApiCredentials" target="_blank">Create OAuth Client Credentials</a>. </li>
+ * 	<li> Based on the user's selection, create an authorized service to access one of the following service APIs: 
  *   <ul> 
  *     <li><a href="https://cloud.google.com/storage/docs/overview" target="_blank">Google Cloud Storage API</a> or </li> 
  *     <li><a href="https://developers.google.com/drive/web/about-sdk" target="_blank">Google Drive API</a> or </li>
@@ -116,8 +115,8 @@ public class AuthorizedService {
 	   * 	<li><b>Other...</b>
 	   * </ol>
 	   * You obtain this information by downloading the JSON format of the 
-	   * <i>Client ID for native application</i> of your project at: 
-	   * @see <a href="https://console.developers.google.com/project" target="_blank">Google console</a>.
+	   * <i>client information for native application</i> of your project at: 
+	   * <a href="https://console.developers.google.com/project" target="_blank">Google console</a>.
 	   * Then copy this information in the <i>secretsFile</i> such as client_secrets.json. 
 	   * <b>Keep this file in a safe place</b>.
 	   * <p>Usage Example: Service(".store", "store_sample", "client_secrets.json"); </p>
@@ -168,7 +167,7 @@ public class AuthorizedService {
         
 	}
 		
-	  /**
+	  /***
 	   * Calculate the absolute path of the stored credentials file.
 	   * @return The absolute path of the file.
 	   */
@@ -191,7 +190,7 @@ public class AuthorizedService {
         
 	}
 	  
-	/***
+	/**
 	 * It obtains the credentials for the client application to allow the use of the requested service REST API.
 	 * <p><b>Note</b> It uses Google OAuth 2.0 authorization code flow that manages and persists end-user credentials. 
 	 * This is designed to simplify the flow in which an end-user authorizes the application to access her protected data, 
@@ -297,8 +296,7 @@ public class AuthorizedService {
 	
 
 	/***
-	 * Create authorized service to allow the application to use the
-	 * service REST API.
+	 * Create authorized service to allow a client application to use the service REST API.
 	 * @param serviceName The service name such as: storage, drive, youtube, etc.. 
 	 * @param serviceScope The scope for which to obtain authorization.
 	 * @return The authorized service object.

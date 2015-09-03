@@ -20,20 +20,23 @@ import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.client.util.Key;
 
 
-/** 
+/*** 
  * Read the current example settings from the predefined JSON file.
  * The file contains information such as project ID, default bucket name and so on.
  * The following is an example of the JSON formatted information:
- * {
- * 	"defaultbucket": "my_toycars",
- * 	"defaultobject": "luigi.jpg",
- * 	"prefix": "myself",
- * 	"email": "me@gmail.com",
- * 	"domain": "acloudysky.com"
- *	}
+ * <pre>
+ *{
+ * "defaultbucket": "my_toycars",
+ * "defaultobject": "luigi.jpg",
+ * "prefix": "myself",
+ * "email": "me@gmail.com",
+ * "domain": "acloudysky.com"
+ *}
+ * </pre>
  * @author Michael
  *
  */
+
 public  final class DefaultSettings extends GenericJson {
 	
 	// This is the Google Cloud Service project ID 
@@ -100,7 +103,7 @@ public  final class DefaultSettings extends GenericJson {
 		return settings;
 	}
   
-	/**
+	/***
 	 * Default constructor to allow creation of an instance 
 	 * of class com.acloudysky.drive.DefaultSettings in the creation of the settings object 
 	 * through the jasonFactory.
@@ -109,7 +112,13 @@ public  final class DefaultSettings extends GenericJson {
 	public DefaultSettings() {
 		
 	}
-		
+	
+	/***
+	 * Create a DefaultSetings object.  
+	 * @param parentDir The parent directory. 
+	 * @param sampleDir The directory containing the default settings file.
+	 * @param defaultsFile The default settings file.
+	 */
 	public DefaultSettings(String parentDir, String sampleDir, String defaultsFile) {
 		
 		parent_dir = parentDir;
@@ -148,7 +157,7 @@ public  final class DefaultSettings extends GenericJson {
 		return filePath;
 	}
 	
-	/**
+	/***
 	 * Read sample settings contained in the supporting <i>defaults_file</i>.
 	 * <p>
 	 * 	<b>Note</b>. This method uses {@link com.google.api.client.json.JsonFactory} to create

@@ -98,7 +98,7 @@ public class ObjectLoaderUtility {
 	          System.out.println("Initiation is complete!");
 	          break;
 	        case MEDIA_IN_PROGRESS:
-	          // TODO(nherring): Progress works if you have a content length specified.
+	          // TODO: Progress works if you have a content length specified.
 	          // System.out.println(uploader.getProgress());
 	          System.out.println(uploader.getNumBytesUploaded());
 	          break;

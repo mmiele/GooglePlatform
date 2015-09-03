@@ -25,7 +25,7 @@ public class Main {
 
 	 
 	/***
-     * Main entry point which displays the start greetings and performs the 
+     * Application entry point which displays the start greetings and performs the 
      * following main tasks:
      * <ul>
      *      <li>Gets authorization to access Google Storage service.</li> 
@@ -68,24 +68,22 @@ public class Main {
 			
 			/*
 			 *  Instantiate the DefaultSettings class.
-			 *	We assume that in the user home directory a parent directory exists called ".store".
-			 * 	It contains a child directory called "storage_sample", which in turn contains a file 
-			 *	"sample_settings.json". This file contains the applications default settings.
+			 *	We assume that a parent directory called ".store" exists in the user home directory.
+			 * 	This directory contains a child directory called "storage_sample", which in turn contains a file 
+			 *	"sample_settings.json". This file contains the application default settings.
 			 */
 			DefaultSettings defaults = 
 					new DefaultSettings(".store", "storage_sample", "sample_settings.json");
 			
-			// Read current application default values from the JSON file.
-			// This amounts to store the default values in memory.
+			// Read application default values from the JSON file.and store them in memory.
 			defaults.readSettings();
 			
-			// Initialize Storage commands classes
+			// Initialize Storage commands classes.
 			ProjectCommands.initProjectCommands(storageService, DefaultSettings.getSettings());
 			BucketCommands.initBucketCommands(storageService, DefaultSettings.getSettings());
 			ObjectCommands.initObjectCommands(storageService, DefaultSettings.getSettings());
 			
 			// Initialize simple UI and display menu.
-			// Pass the authorized service.
 			SimpleUI sui = new SimpleUI();
 	
 			// Process user's input.

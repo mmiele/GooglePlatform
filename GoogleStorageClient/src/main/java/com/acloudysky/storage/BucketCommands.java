@@ -34,7 +34,7 @@ public class BucketCommands {
 	// Settings applicable to the current application.
 	private static DefaultSettings settings;
 	
-	/**
+	/***
 	 * Initialize authenticated storage service using default settings.
 	 * @param authorizedService The storage authorized service
 	 * @param defaultSettings The default settings in JSON format

@@ -27,8 +27,6 @@ import java.util.logging.*;
  */
 public class ProjectCommands {
 
-	private static Logger httplogger;
-	
 	// Cloud Storage authenticated service.
 	private static Storage storageService;
 	
@@ -36,7 +34,7 @@ public class ProjectCommands {
 	private static DefaultSettings settings;
 	
 	/**
-	 * Initializes the authenticated storage service and default settings. 
+	 * Initialize the authenticated storage service and default settings. 
 	 * @param authorizedService The object representing the authorized service.
 	 * @param defaultSettings The default values to use for the project
 	 */
@@ -50,71 +48,63 @@ public class ProjectCommands {
 		settings = 	defaultSettings;
 	}
 	
+	
 	/*
 	 * ******** Utility Methods   *********
 	 */
-	 static void displayMessageHeader(String name) {
-	      System.out.println();
-	      System.out.println("================== " + name + " ==================");
-	      System.out.println();
-	    }
-	    
 	
-	 static void displayBucketInformation(Bucket bucket) {
-	      System.out.println("name: " + bucket.getName());
-	      System.out.println("location: " + bucket.getLocation());
-	      System.out.println("timeCreated: " + bucket.getTimeCreated());
-	      System.out.println("owner: " + bucket.getOwner());
-	      System.out.println("acl: " + bucket.getAcl());
+	/*
+	 * Display header information.
+	 */
+	 static private void displayMessageHeader(String name) {
+		 StringBuffer header = new StringBuffer();
+		 header.append(String.format("%n==================  %s ==================%n", name));
+		 // Display header.
+		 System.out.println(header.toString());
+	 }
+	    
+	 /*
+	  * Display bucket information. 
+	  */
+	 static private void displayBucketInformation(Bucket bucket) {
+		 StringBuffer results = new StringBuffer();
+		 results.append(String.format("%n name %s %n", bucket.getName()));
+		 results.append(String.format(" location %s %n", bucket.getLocation()));
+		 results.append(String.format(" timeCreated %s %n", bucket.getTimeCreated()));
+		 results.append(String.format(" owner %s %n", bucket.getOwner()));
+		 results.append(String.format(" acl %s %n", bucket.getAcl()));
 	      
-	    }
+		 // Display header.
+		 System.out.println(results.toString());
+	 }
 	 
 
  	/**
-	 * Retrieves the a list of buckets for a given project.
-	 * Displays the metadata of the retrieved buckets.
+	 * Retrieve the list of buckets for the given project.
+	 * Display the metadata of the retrieved buckets.
 	 * For more information, see 
 	 * <a href="https://developers.google.com/resources/api-libraries/documentation/storage/v1beta2/java/latest/com/google/api/services/storage/Storage.Buckets.List.html" target="_blank">Storage.Buckets.List</a>.
 	 * @throws IOException IO error
 	 */
 	public static void listBuckets() throws IOException {
 	  
-		// Get the list of the buckets in the projects.
+		// Get the list of the buckets in the project.
 		// Call the service REST API.
 		Storage.Buckets.List listBuckets = 
 				storageService.buckets().list(settings.getProject());
 		// Java data model class that specifies how to parse/serialize 
-		// into the JSON that is transmitted over HTTP when working 
-		// with the Cloud Storage API. 
+		// HTTP wire traffic into JSON format.
 		Buckets buckets;
 		// Loop to read buckets metadata.
 		do {
-			
-			
-			httplogger = Logger.getLogger("com.google.api.client.http.HttpRequest");
-			httplogger.setLevel(Level.ALL);
-			System.out.println(httplogger.toString());
-		     
-		     // Create a log handler which prints all log events to the console.
-		     ConsoleHandler logHandler = new ConsoleHandler();
-		     logHandler.setLevel(Level.ALL);
-		     httplogger.addHandler(logHandler);
-				   
-		   
-			// HttpRequest request = listBuckets.buildHttpRequest();
-		
-		
 			buckets = listBuckets.execute();
 			
-		  
-		  for (Bucket bucket : buckets.getItems()) {
-			
+			for (Bucket bucket : buckets.getItems()) {
 			  displayMessageHeader("Getting bucket " + bucket.getName() + " metadata");
 			  displayBucketInformation(bucket);
-			  
 		  }
 		  listBuckets.setPageToken(buckets.getNextPageToken());
-		} while (null != buckets.getNextPageToken());
+		} while (buckets.getNextPageToken() != null);
 		
 	  }
  

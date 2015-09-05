@@ -74,9 +74,9 @@ public class BucketCommands {
 		 results.append(String.format(" owner %s %n", bucket.getOwner()));
 		 results.append(String.format(" acl %s %n", bucket.getAcl()));
 	      
-	   // Display header.
-			System.out.println(results.toString());
-	    }
+		 // Display header.
+		 System.out.println(results.toString());
+	 }
 	
 	/***
 	 * Create a bucket with the specified name in the specified project.

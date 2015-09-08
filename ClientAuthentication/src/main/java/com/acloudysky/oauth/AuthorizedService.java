@@ -38,7 +38,7 @@ import com.google.api.client.util.store.FileDataStoreFactory;
 import com.google.api.services.drive.Drive;
 import com.google.api.services.storage.Storage;
 import com.google.api.services.youtube.YouTube;
-
+import com.google.api.services.bigquery.Bigquery;
 
 /***
  * Create a service object that is authorized to access the selected Google service API. 
@@ -352,9 +352,20 @@ public class AuthorizedService {
 						currentServiceScopes = serviceScope;
 						break;
 					}
+					
+					case "bigquery": {
+						// Obtain the credential for the application
+						appCredential = authorize(serviceScope);
+						service = new Bigquery.Builder(httpTransport, JSON_FACTORY, appCredential).setApplicationName(
+						    		APPLICATION_NAME).build();
+						// Store new scope.
+						currentServiceScopes = serviceScope;
+						break;
+					}
+					
 					default: {
 						System.out.println(String.format("Service %s is not allowed.", serviceName));
-						System.out.println(String.format("Allowed services are %s, %s", "storage", "drive"));
+						System.out.println(String.format("Allowed services are %s, %s", "storage", "drive", "youtube", "bigquery"));
 						break;
 					}
 				}

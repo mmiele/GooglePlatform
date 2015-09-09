@@ -67,6 +67,7 @@ public class Main {
 			}
 		}
 		
+		// Display greeting message.
 		String startGreetings = String.format("Hello %s let's start %s", name, topic);
 		System.out.println(startGreetings);	
 		
@@ -88,7 +89,7 @@ public class Main {
 			// Read current application default values.
 			// defaults.readSettings();
 
-			// Initializes the classes that contaisn methods to interact with Youtube service.
+			// Initializes the classes that contains methods to interact with Youtube service.
 			VideoInformation.initVideoInformation(youtubeService);
 			VideoActions.initVideoActions(youtubeService);
 			

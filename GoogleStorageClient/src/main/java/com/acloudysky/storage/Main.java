@@ -12,12 +12,11 @@ package com.acloudysky.storage;
 
 import com.acloudysky.storage.DefaultSettings;
 import com.acloudysky.storage.SimpleUI;
-
 import com.google.api.services.storage.Storage;
 import com.google.api.services.storage.StorageScopes;
 
 /**
- * Contains the main entry for the console application. 
+ * Contains the Main class for the GoogleStorageClient console application. 
  * @author Michael
  *
  */
@@ -39,25 +38,35 @@ public class Main {
      * @see BucketCommands#initBucketCommands(Storage, DefaultSettings)
      * @see ObjectCommands#initObjectCommands(Storage, DefaultSettings)
      * @see SimpleUI#SimpleUI()
-	 * @param args; args[0] = "Michael"
-	 * 				args[1] = "Google Storage Console Application"
+	 * @param args; args[0] = Your name
+	 *  			args[1] = Your message in quotes
 	 * 
 	 */
 	public static void main(String[] args) {
 	
-		String name, topic;
+		String name = null, topic = null;
 		
+		// Read input parameters.
 		try {
 				name = args[0];
 				topic = args[1];
-				
-				String startGreetings = String.format("Hello %s let's start %s", name, topic);
-				System.out.println(startGreetings);
-			
-		}catch (Exception e) {
-			System.out.println("IO error trying to read application input!");
-			System.exit(1);
 		}
+		catch (Exception e) {
+			System.out.println("IO error trying to read application input! Assigning default values.");
+			// Assign default values if none are passed.
+			if (args.length==0) {
+				name = "Michael";
+				topic = "Google Storage Console Application";
+			}
+			else {
+				System.out.println("IO error trying to read application input!");
+				System.exit(1); 
+			}
+		}
+		
+		String startGreetings = String.format("Hello %s let's start %s", name, topic);
+		System.out.println(startGreetings);	
+		
 		
 		// Get authorization to access Google Storage service.
 		Storage storageService = 

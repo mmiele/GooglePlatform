@@ -11,6 +11,8 @@
 package com.acloudysky.youtube;
 
 
+import java.io.IOException;
+
 import com.google.api.services.youtube.YouTubeScopes;
 import com.google.api.services.youtube.YouTube;
 
@@ -19,37 +21,54 @@ import com.acloudysky.youtube.SimpleUI;
 import com.acloudysky.youtube.OAuthUtilities;
 
 /**
- * Contains the main entry for the console application. 
+ * Contains the Main class for the YoutubeClient console application. 
  * @author Michael
  *
  */
 public class Main {
 
 	/***
-	 * Main entry point which displays the start greetings.
-	 * Most importantly, it delegates to the SimpleUI class the display of the selection menu 
-	 * and the processing of the user's input. 
+     * Application entry point which displays the start greetings and performs the 
+     * following main tasks:
+     * <ul>
+     *      <li>Gets authorization to access Youtube service.</li> 
+     *		<li>Reads the default settings.</li>
+     * 		<li>Instantiates the local classes.</li>
+	 * 		<li>Delegates to the SimpleUI class the display of the selection 
+	 *         menu and the processing of the user's input.</li>
+	 * </ul>
 	 * @see SimpleUI#SimpleUI()
+	 * @see VideoActions#initVideoActions(YouTube)
+	 * @see VideoInformation#initVideoInformation(YouTube)
 	 * @param args; 
-	 *  args[0] = "Michael"
-	 *  args[1] = "Google Youtube Console Application"
+	 *  args[0] = Your name
+	 *  args[1] = Your message in quotes
 	 * 
 	 */
 	public static void main(String[] args) {
 		
-		String name, topic;
+		String name = null, topic = null;
 		
+		// Read input parameters.
 		try {
 				name = args[0];
 				topic = args[1];
-				
-				String startGreetings = String.format("Hello %s let's start %s", name, topic);
-				System.out.println(startGreetings);	
 		}
 		catch (Exception e) {
-			System.out.println("IO error trying to read application input!");
-			System.exit(1); 
+			System.out.println("IO error trying to read application input! Assigning default values.");
+			// Assign default values if none are passed.
+			if (args.length==0) {
+				name = "Michael";
+				topic = "Google Youtube Console Application";
+			}
+			else {
+				System.out.println("IO error trying to read application input!");
+				System.exit(1); 
+			}
 		}
+		
+		String startGreetings = String.format("Hello %s let's start %s", name, topic);
+		System.out.println(startGreetings);	
 		
 		// Get the authenticated service with the default minimal scope. 
 		YouTube youtubeService = 
@@ -69,6 +88,7 @@ public class Main {
 			// Read current application default values.
 			// defaults.readSettings();
 
+			// Initializes the classes that contaisn methods to interact with Youtube service.
 			VideoInformation.initVideoInformation(youtubeService);
 			VideoActions.initVideoActions(youtubeService);
 			

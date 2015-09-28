@@ -48,11 +48,11 @@ public class Main {
 			System.exit(1);
 		}
 		
-		// Get authorized service using default scope.
-		Drive driveService = 
+		// Get authorized service client using default scope.
+		Drive driveServiceClient = 
 				OAuthUtilities.getAuthorizedService(DriveScopes.DRIVE);
 		
-		if (driveService != null) {
+		if (driveServiceClient != null) {
 			/*
 			 *  Instantiate the DefaultSettings class.
 			 *	We assume that in the user home directory a parent directory exists called ".store".
@@ -65,7 +65,7 @@ public class Main {
 			defaults.readSettings();
 			
 			// Initialize simple UI and display menu.
-			SimpleUI sui = new SimpleUI(driveService);
+			SimpleUI sui = new SimpleUI(driveServiceClient);
 	
 			// Process user's input.
 			sui.processUserInput();

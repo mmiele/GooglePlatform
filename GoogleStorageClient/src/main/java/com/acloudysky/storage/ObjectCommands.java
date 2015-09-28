@@ -37,16 +37,15 @@ public class ObjectCommands {
 	private static DefaultSettings settings;
 		
 	/***
-	 * Initialize authenticated storage service and
-	 * settings applicable to the application.
+	 * Initialize authenticated storage service client and default settings.
 	 * @param defaultSettings Default settings in JSON format
-	 * @param authorizedService Storage authorized service
+	 * @param authorizedServiceClient Storage authorized service
 	 */
-	public static void initObjectCommands(Storage authorizedService, 
+	public static void initObjectCommands(Storage authorizedServiceClient, 
 			DefaultSettings defaultSettings) {
 		
 		// Create authorized cloud storage service.
-		storageService = authorizedService;
+		storageService = authorizedServiceClient;
 		
 		// Initialize sample settings.
 		settings = 	defaultSettings;

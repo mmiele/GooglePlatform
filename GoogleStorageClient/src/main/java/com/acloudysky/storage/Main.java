@@ -69,11 +69,11 @@ public class Main {
 		
 		
 		// Get authorization to access Google Storage service.
-		Storage storageService = 
-				OAuthUtilities.getAuthorizedService(StorageScopes.DEVSTORAGE_FULL_CONTROL);
+		Storage storageServiceClient = 
+				OAuthUtilities.getAuthorizedServiceClient(StorageScopes.DEVSTORAGE_FULL_CONTROL);
 		
 
-		if (storageService != null) {
+		if (storageServiceClient != null) {
 			
 			/*
 			 *  Instantiate the DefaultSettings class.
@@ -88,9 +88,9 @@ public class Main {
 			defaults.readSettings();
 			
 			// Initialize Storage commands classes.
-			ProjectCommands.initProjectCommands(storageService, DefaultSettings.getSettings());
-			BucketCommands.initBucketCommands(storageService, DefaultSettings.getSettings());
-			ObjectCommands.initObjectCommands(storageService, DefaultSettings.getSettings());
+			ProjectCommands.initProjectCommands(storageServiceClient, DefaultSettings.getSettings());
+			BucketCommands.initBucketCommands(storageServiceClient, DefaultSettings.getSettings());
+			ObjectCommands.initObjectCommands(storageServiceClient, DefaultSettings.getSettings());
 			
 			// Initialize simple UI and display menu.
 			SimpleUI sui = new SimpleUI();

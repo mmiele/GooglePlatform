@@ -1,6 +1,6 @@
 package com.acloudysky.storage;
 
-import com.acloudysky.oauth.AuthorizedService;
+import com.acloudysky.oauth.AuthorizedClient;
 import com.google.api.services.storage.Storage;
 
 /**
@@ -20,18 +20,18 @@ public class OAuthUtilities {
 	 * <a href="https://developers.google.com/resources/api-libraries/documentation/storage/v1beta2/java/latest/com/google/api/services/storage/StorageScopes.html" target="_blank">Class StorageScopes</a>.
 	 * @return The object that represents the authorized service.
 	 */
-	public static Storage getAuthorizedService(String serviceScope) {
+	public static Storage getAuthorizedServiceClient(String serviceScope) {
 		
 		Storage storageService = null;
 				
 		try {
 			
 			// Instantiate the Service class.
-			AuthorizedService service = 
-					new AuthorizedService(".store", "storage_sample", "client_secrets.json");
+			AuthorizedClient serviceClient = 
+					new AuthorizedClient(".store", "storage_sample", "client_secrets.json");
 		
 			// Get the authorized service so the application can use its API.
-			storageService = (Storage) service.getAuthorizedService("storage", serviceScope);
+			storageService = (Storage) serviceClient.getAuthorizedServiceClient("storage", serviceScope);
 			
 		}
 		catch (Exception e) {

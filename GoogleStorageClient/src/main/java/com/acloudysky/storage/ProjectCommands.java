@@ -34,15 +34,15 @@ public class ProjectCommands {
 	private static DefaultSettings settings;
 	
 	/**
-	 * Initialize the authenticated storage service and default settings. 
-	 * @param authorizedService The object representing the authorized service.
+	 * Initialize the authenticated storage service client and default settings. 
+	 * @param authorizedServiceClient The object representing the authorized service.
 	 * @param defaultSettings The default values to use for the project
 	 */
-	public static void initProjectCommands(Storage authorizedService, 
+	public static void initProjectCommands(Storage authorizedServiceClient, 
 			DefaultSettings defaultSettings) {
 		
 		// Create authorized cloud storage service.
-		storageService = authorizedService;
+		storageService = authorizedServiceClient;
 		
 		// Initialize sample settings.
 		settings = 	defaultSettings;

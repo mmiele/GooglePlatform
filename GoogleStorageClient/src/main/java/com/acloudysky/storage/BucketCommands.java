@@ -35,15 +35,15 @@ public class BucketCommands {
 	private static DefaultSettings settings;
 	
 	/***
-	 * Initialize authenticated storage service using default settings.
-	 * @param authorizedService The storage authorized service
+	 * Initialize authenticated storage service client and default settings. 
+	 * @param authorizedServiceClient The storage authorized service
 	 * @param defaultSettings The default settings in JSON format
 	 */
-	public static void initBucketCommands(Storage authorizedService, 
+	public static void initBucketCommands(Storage authorizedServiceClient, 
 			DefaultSettings defaultSettings) {
 		
 		// Create authorized cloud storage service.
-		storageService = authorizedService;
+		storageService = authorizedServiceClient;
 		
 		// Initialize sample settings.
 		settings = 	defaultSettings;

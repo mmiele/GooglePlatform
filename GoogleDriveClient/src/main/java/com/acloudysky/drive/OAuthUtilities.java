@@ -20,17 +20,17 @@ public class OAuthUtilities {
 	 * <a href="https://developers.google.com/resources/api-libraries/documentation/drive/v2/java/latest/com/google/api/services/drive/DriveScopes.html" target="_blank">Class DriveScopes</a>.
 	 * @return The object that represents the authorized service.
 	 */
-	public static Drive getAuthorizedService(String serviceScope) {
+	public static Drive getAuthorizedServiceClient(String serviceScope) {
 		
 		Drive driveServiceClient = null;
 				
 		try {
-			// Instantiate the Service class.
-			AuthorizedClient service = 
+			// Instantiate the authorized client class.
+			AuthorizedClient serviceClient = 
 				new AuthorizedClient(".store", "drive_sample", "client_secrets.json");
 		
-			// Get the authorized service so the application can use its  API.
-			driveServiceClient = (Drive) service.getAuthorizedServiceClient("drive", serviceScope);
+			// Get the authorized service client so the application can use the service  API.
+			driveServiceClient = (Drive) serviceClient.getAuthorizedServiceClient("drive", serviceScope);
 			
 		}
 		catch (Exception e) {

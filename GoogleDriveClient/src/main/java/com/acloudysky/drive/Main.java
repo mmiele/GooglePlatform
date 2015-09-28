@@ -50,7 +50,7 @@ public class Main {
 		
 		// Get authorized service client using default scope.
 		Drive driveServiceClient = 
-				OAuthUtilities.getAuthorizedService(DriveScopes.DRIVE);
+				OAuthUtilities.getAuthorizedServiceClient(DriveScopes.DRIVE);
 		
 		if (driveServiceClient != null) {
 			/*

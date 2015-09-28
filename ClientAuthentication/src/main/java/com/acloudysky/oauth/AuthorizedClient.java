@@ -56,8 +56,11 @@ import com.google.api.services.bigquery.Bigquery;
  * @author Michael 
  *   
  */
-public class AuthorizedService {
+public class AuthorizedClient {
 
+	// Debug flag to use for testing purposes.
+	private static boolean DEBUG = false;
+	
 	/**
 	   * Be sure to specify the name of your application. If the application name is {@code null} or
 	   * blank, the application will log a warning. Suggested format is "MyCompany-ProductName/1.0".
@@ -80,11 +83,13 @@ public class AuthorizedService {
       // Directory to store user credentials. 
 	  private java.io.File DATA_STORE_DIR;
 	  
-	  // Contains the authorized service.
-	  private Object service;
+	  // Authorized service client
+	  private Object serviceClient;
 	  
-	  public Object getService() {
-		return service;
+	 
+
+	  public Object getServiceClient() {
+		return serviceClient;
 	  }
 
 	
@@ -105,9 +110,6 @@ public class AuthorizedService {
 
 	  /***
 	   * Class constructor.
-	   * @param baseDir The parent directory
-	   * @param sampleDir The directory containing the file with the client secrets.
-	   * @param secretsFile The file containing the client secrets.
 	   * <p><b>Note</b>, The client secrets are:
 	   * <ol>
 	   * 	<li><b>Client ID</b></li>
@@ -120,8 +122,11 @@ public class AuthorizedService {
 	   * Then copy this information in the <i>secretsFile</i> such as client_secrets.json. 
 	   * <b>Keep this file in a safe place</b>.
 	   * <p>Usage Example: Service(".store", "store_sample", "client_secrets.json"); </p>
+	   * @param baseDir The parent directory
+	   * @param sampleDir The directory containing the file with the client secrets.
+	   * @param secretsFile The file containing the client secrets.
 	   */
-	  public AuthorizedService (String baseDir, String sampleDir, String secretsFile) {
+	  public AuthorizedClient (String baseDir, String sampleDir, String secretsFile) {
 		 
 		  // Store base and sample directories.
 		  base_dir = baseDir;
@@ -159,10 +164,11 @@ public class AuthorizedService {
         		 filePath = home_dir.concat("/" + data_dir + "/" + clientSecretsFile);
         
         // Test 
-//        System.out.println(String.format("Home dir: %s", home_dir));
-//        System.out.println(String.format("OS: %s", OS));
-//        System.out.println(String.format("File path: %s", filePath));
-//       
+        if (DEBUG) {
+        	System.out.println(String.format("Home dir: %s", home_dir));
+        	System.out.println(String.format("OS: %s", OS));
+        	System.out.println(String.format("File path: %s", filePath));
+        }
         return filePath;
         
 	}
@@ -182,10 +188,11 @@ public class AuthorizedService {
         		 filePath = home_dir.concat("/" + data_dir + "/" + STORED_CREDENTIAL_FILE);
         
         // Test 
-//        System.out.println(String.format("Home dir: %s", home_dir));
-//        System.out.println(String.format("OS: %s", OS));
-//        System.out.println(String.format("File path: %s", filePath));
-//       
+        if (DEBUG) {
+        	System.out.println(String.format("Home dir: %s", home_dir));
+        	System.out.println(String.format("OS: %s", OS));
+        	System.out.println(String.format("File path: %s", filePath));
+        }
         return filePath;
         
 	}
@@ -204,9 +211,11 @@ public class AuthorizedService {
 	private static Credential authorize(String serviceScopes) throws Exception {
 	   
 		// Test
-//		System.out.println(String.format("Current scope: %s", currentServiceScopes));
-//		System.out.println(String.format("New scope: %s", serviceScopes));
-//	
+		if (DEBUG) {
+			System.out.println(String.format("Current scope: %s", currentServiceScopes));
+			System.out.println(String.format("New scope: %s", serviceScopes));
+		}
+		
 		boolean useStoredCredentials = true;
 		
 		// If the application needs to change service scope while running, like in the Youtube case,
@@ -296,12 +305,12 @@ public class AuthorizedService {
 	
 
 	/***
-	 * Create authorized service to allow a client application to use the service REST API.
+	 * Create authorized service client to allow an application to use the service REST API.
 	 * @param serviceName The service name such as: storage, drive, youtube, etc.. 
 	 * @param serviceScope The scope for which to obtain authorization.
 	 * @return The authorized service object.
 	 */
-	 public Object getAuthorizedService(String serviceName, String serviceScope) {
+	 public Object getAuthorizedServiceClient(String serviceName, String serviceScope) {
 		 
 		  Object service = null;
 		  

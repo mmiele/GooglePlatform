@@ -39,7 +39,7 @@ public class SimpleUI {
 	 * Initializes the menu that allows the user to make the allowed choices.
 	 * It uses a StringBuilder to create the formatted menu.
 	 */
-	SimpleUI(Drive authorizedService) {
+	SimpleUI(Drive authorizedServiceClient) {
 		menu = new StringBuilder();
 		menu.append(String.format("Select one of the following options:%n"));	
 		menu.append(String.format("%n%s List user's files.", "f1"));
@@ -55,7 +55,7 @@ public class SimpleUI {
 		
 		// Instantiate the FileCommands class to handle
 		// Google Drive File API calls.
-		files = new FileCommands(authorizedService);
+		files = new FileCommands(authorizedServiceClient);
 		
 		// Display menu.
 		System.out.println(menu.toString());

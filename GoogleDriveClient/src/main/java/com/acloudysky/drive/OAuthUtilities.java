@@ -1,6 +1,6 @@
 package com.acloudysky.drive;
 
-import com.acloudysky.oauth.AuthorizedService;
+import com.acloudysky.oauth.AuthorizedClient;
 import com.google.api.services.drive.Drive;
 
 /**
@@ -11,9 +11,9 @@ import com.google.api.services.drive.Drive;
 public class OAuthUtilities {
 	
 	/***
-	 * Authorizes the application to use Youtube API. 
+	 * Authorizes the application to use the Drive API. 
 	 * <p><b>Note</b>. The method assumes that you already have created a directory to 
-	 * store the file with the client secrets. The directory is .store/youtube_sample. 
+	 * store the file with the client secrets. The directory is .store/drive_sample. 
 	 * The file containing the secrets is client_secrets.json.
 	 * @param serviceScope - The scope for which to obtain the authorization.
 	 * The values for the scope can be found at 
@@ -22,21 +22,21 @@ public class OAuthUtilities {
 	 */
 	public static Drive getAuthorizedService(String serviceScope) {
 		
-		Drive driveService = null;
+		Drive driveServiceClient = null;
 				
 		try {
 			// Instantiate the Service class.
-			AuthorizedService service = 
-				new AuthorizedService(".store", "drive_sample", "client_secrets.json");
+			AuthorizedClient service = 
+				new AuthorizedClient(".store", "drive_sample", "client_secrets.json");
 		
 			// Get the authorized service so the application can use its  API.
-			driveService = (Drive) service.getAuthorizedService("drive", serviceScope);
+			driveServiceClient = (Drive) service.getAuthorizedServiceClient("drive", serviceScope);
 			
 		}
 		catch (Exception e) {
 			String.format("Error %s during service authorization.", e.toString());
 		}
-		return driveService;
+		return driveServiceClient;
 		
 	}
 
